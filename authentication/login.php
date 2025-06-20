@@ -15,13 +15,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['user_type'] = $user['user_type'];
-            $_SESSION['profile_picture'] = $user['profile_picture'];
+            $_SESSION['phone'] = $user['phone'];
 
             // Redirect to respective dashboard
-            if ($user['user_type'] == 'Midwife') {
-                header("Location: dashboard_midwife.php");
+            if ($user['user_type'] == 'admin') {
+                header("Location: admin/dashboard_admin.php");
             } else {
-                header("Location: dashboard_mother.php");
+                header("Location: user/dashboard_user.php");
             }
             exit;
         } else {

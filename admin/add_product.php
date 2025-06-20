@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'Mother') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'admin') {
     header("Location: login.php");
     exit;
 }
@@ -64,11 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
-                        <h2 class="form-title">Add Child</h2>
+                        <h2 class="form-title">Add Product</h2>
                         <form method="POST" class="register-form" id="register-form" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="baby_name" id="baby_name" placeholder="Child's Name" required />
+                                <input type="text" name="product_name" id="baby_name" placeholder="Product Name" required />
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-calendar"></i></label>

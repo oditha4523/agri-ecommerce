@@ -1,28 +1,28 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'admin') {
-    header("Location: login.php");
+    header("Location: ../authentication/login.php");
     exit;
 }
 include 'DBcon.php';
 
-$baby_id = $_GET['baby_id'];
+$seller_id = $_GET['seller_id'];
 $mother_id = $_SESSION['user_id'];
 
-// Fetch child's details
-$baby_result = $conn->query("SELECT * FROM Babies WHERE baby_id = $baby_id AND mother_id = $mother_id");
+// Fetch sellers's details
+$baby_result = $conn->query("SELECT * FROM sellers WHERE seller_id = $seller_id");
 $baby = $baby_result->fetch_assoc();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $dob = mysqli_real_escape_string($conn, $_POST['dob']);
-    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+    $address = mysqli_real_escape_string($conn, $_POST['address']);
 
     // Update child's details
-    $sql = "UPDATE Babies SET name='$name', dob='$dob', gender='$gender' WHERE baby_id=$baby_id";
+    $sql = "UPDATE Babies SET name='$name', phone_number='$phone', address='$address' WHERE seller_id=$seller_id";
 
     if ($conn->query($sql) === TRUE) {
-        header("Location: dashboard_mother.php?success=child_updated");
+        header("Location: view_sellers.php?success=seller_updated");
         exit;
     } else {
         echo "Error updating record: " . $conn->error;
@@ -44,18 +44,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="POST">
             <div class="form-group">
                 <label for="name"><i class="zmdi zmdi-account"></i></label>
-                <input type="text" name="name" value="<?php echo $baby['name']; ?>" required />
+                <input type="text" name="name" value="<?php echo $seller_id['name']; ?>" required />
             </div>
             <div class="form-group">
-                <label for="dob"><i class="zmdi zmdi-calendar"></i></label>
-                <input type="date" name="dob" value="<?php echo $baby['dob']; ?>" required />
+                <label for="phone"><i class="zmdi zmdi-calendar"></i></label>
+                <input type="phone" name="phone" value="<?php echo $seller_id['phone']; ?>" required />
             </div>
             <div class="form-group">
-                <label for="gender"><i class="zmdi zmdi-male-female"></i></label>
-                <select name="gender" required>
-                    <option value="Male" <?php if($baby['gender'] == 'Male') echo 'selected'; ?>>Male</option>
-                    <option value="Female" <?php if($baby['gender'] == 'Female') echo 'selected'; ?>>Female</option>
-                </select>
+                <label for="address"><i class="zmdi zmdi-calendar"></i></label>
+                <input type="address" name="address" value="<?php echo $seller_id['address']; ?>" required />
             </div>
             <div class="form-group form-button">
                 <button type="submit" class="form-submit">Save Changes</button>
@@ -63,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
 
         <!-- Back Button Always Goes to Parent Dashboard -->
-        <a href="dashboard_mother.php" class="back-button">Back</a>
+        <a href="view_sellers.php" class="back-button">Back</a>
     </div>
 </body>
 </html>
