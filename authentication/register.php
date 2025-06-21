@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'DBcon.php';
+include '../db/DBcon.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['name']);

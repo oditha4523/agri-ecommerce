@@ -4,7 +4,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'admin') {
     header("Location: ../authentication/login.php");
     exit;
 }
-include 'DBcon.php';
+include '../db/DBcon.php';
 
 $seller_id = $_GET['seller_id'];
 $mother_id = $_SESSION['user_id'];

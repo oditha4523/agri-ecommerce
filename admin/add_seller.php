@@ -4,7 +4,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'admin') {
     header("Location: ../authentication/login.php");
     exit;
 }
-include 'DBcon.php';
+include '../db/DBcon.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['name']);
