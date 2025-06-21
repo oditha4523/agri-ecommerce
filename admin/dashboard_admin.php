@@ -24,7 +24,7 @@ include 'DBcon.php';
 
         <div class="dashboard-section">
             <a href="view_sellers.php" class="add-child-button">Sellers</a>
-            <a href="add_product.php" class="add-child-button">Add Product</a>
+            <a href="add_product.php" class="add-child-button">Products</a>
         </div>
 
         <div class="dashboard-footer">
