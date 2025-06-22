@@ -27,10 +27,6 @@ $products = $conn->query("
 </head>
 <body>
     <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2>
-        </div>
-
         <div class="dashboard-section">
             <h3>Posted Products</h3>
             <div class="card-container">
