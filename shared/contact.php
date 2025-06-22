@@ -44,9 +44,9 @@ include 'session_active.php';
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.php" class="active">Home</a></li>
+          <li><a href="index.php">Home</a></li>
           <li><a href="team.php">Team</a></li>
-          <li><a href="contact.php">Contact</a></li>
+          <li><a href="contact.php" class="active">Contact</a></li>
           <li><?php displayUserSession(); ?></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
