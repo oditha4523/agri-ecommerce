@@ -16,12 +16,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['name'] = $user['name'];
             $_SESSION['user_type'] = $user['user_type'];
             $_SESSION['phone'] = $user['phone'];
+            $_SESSION['logged_in'] = true; // Add this line
 
             // Redirect to respective dashboard
             if ($user['user_type'] == 'admin') {
-                header("Location: admin/dashboard_admin.php");
+                header("Location: ../admin/dashboard_admin.php");
             } else {
-                header("Location: user/dashboard_user.php");
+                header("Location: ../user/dashboard_user.php");
             }
             exit;
         } else {

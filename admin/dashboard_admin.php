@@ -29,7 +29,7 @@ include '../db/DBcon.php';
 
         <div class="dashboard-footer">
             <a href="edit_profile.php" class="add-child-button">Edit Profile</a>
-            <a href="logout.php" class="logout-button">Logout</a>
+            <a href="../authentication/logout.php" class="logout-button">Logout</a>
         </div>
 
     </div>

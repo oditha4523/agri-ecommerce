@@ -1,15 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'Mother') {
-    header("Location: login.php");
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'user') {
+    header("Location: ../authentication/login.php");
     exit;
 }
 include 'DBcon.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Get mother's babies
-$babies = $conn->query("SELECT * FROM Babies WHERE mother_id = $user_id");
 ?>
 
 <!DOCTYPE html>

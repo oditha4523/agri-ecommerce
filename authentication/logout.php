@@ -1,13 +1,7 @@
 <?php
 session_start();
-
-// Unset all session variables
-$_SESSION = [];
-
-// Destroy the session
+session_unset();
 session_destroy();
-
-// Redirect to login page or any other desired page after logout
-header("Location: index.html");
+header("Location: ../shared/index.php");
 exit();
 ?>

@@ -41,6 +41,7 @@ $products = $conn->query("SELECT * FROM products where availability = '1'");
         </div>
 
         <div class="dashboard-footer">
+            <a href="dashboard_admin.php" class="add-child-button">Back</a>
             <a href="add_product.php" class="add-child-button">Add Product</a>
         </div>
 

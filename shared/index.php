@@ -1,3 +1,7 @@
+<?php
+include 'session_active.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,10 +44,10 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="team.html">Team</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="../authentication/register.php"><u>Get Started</u></a></li>
+          <li><a href="index.php" class="active">Home</a></li>
+          <li><a href="team.php">Team</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><?php displayUserSession(); ?></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

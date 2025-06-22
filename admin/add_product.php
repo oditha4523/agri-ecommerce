@@ -88,8 +88,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="assets/img/Option.png" alt="Sign up image" style="border-radius :50%"></figure>
-                        <a href="dashboard_mother.php" class="signup-image-link">Back</a>
+                        <figure><img src="../assets/img/Option.png" alt="Sign up image" style="border-radius :50%"></figure>
+                        <a href="view_products.php" class="signup-image-link">Back</a>
                     </div>
                 </div>
             </div>

@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = password_hash($_POST['pass'], PASSWORD_BCRYPT);
     $phone = mysqli_real_escape_string($conn, $_POST['phone']);
 
-    $sql = "INSERT INTO Users (name, email, password_hash, phoneno) 
+    $sql = "INSERT INTO Users (name, email, password_hash, phone) 
             VALUES ('$name', '$email', '$password', '$phone')";
 
     if ($conn->query($sql) === TRUE) {

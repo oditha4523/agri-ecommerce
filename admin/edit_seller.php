@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = mysqli_real_escape_string($conn, $_POST['address']);
 
     // Update child's details
-    $sql = "UPDATE Babies SET name='$name', phone_number='$phone', address='$address' WHERE seller_id=$seller_id";
+    $sql = "UPDATE sellers SET name='$name', phone_number='$phone', address='$address' WHERE seller_id=$seller_id";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: view_sellers.php?success=seller_updated");
@@ -47,11 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" name="name" value="<?php echo $seller_id['name']; ?>" required />
             </div>
             <div class="form-group">
-                <label for="phone"><i class="zmdi zmdi-calendar"></i></label>
+                <label for="phone"><i class="zmdi zmdi-phone"></i></label>
                 <input type="phone" name="phone" value="<?php echo $seller_id['phone']; ?>" required />
             </div>
             <div class="form-group">
-                <label for="address"><i class="zmdi zmdi-calendar"></i></label>
+                <label for="address"><i class="zmdi zmdi-home"></i></label>
                 <input type="address" name="address" value="<?php echo $seller_id['address']; ?>" required />
             </div>
             <div class="form-group form-button">

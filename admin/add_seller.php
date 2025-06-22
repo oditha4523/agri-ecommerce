@@ -50,15 +50,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <form method="POST" class="register-form" id="register-form" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name" required />
+                                <input type="text" name="name" id="name" placeholder="Full Name" required />
                             </div>
                             <div class="form-group">
-                                <label for="phone"><i class="zmdi zmdi-lock-outline"></i></label>
+                                <label for="phone"><i class="zmdi zmdi-phone"></i></label>
                                 <input type="text" name="phone" id="phone" placeholder="Enter Mobile Number" required />
                             </div>
                             <div class="form-group">
-                                <label for="address"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="text" name="address" id="address" placeholder="Enter Mobile Number" required />
+                                <label for="address"><i class="zmdi zmdi-home"></i></label>
+                                <input type="text" name="address" id="address" placeholder="Enter Address" required />
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
@@ -66,8 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="assets/img/ChildReg.png" alt="Sign up image"></figure>
-                        <a href="login.php" class="signup-image-link">I am already a member</a>
+                        <figure><img src="../assets/img/Option.png" alt="Sign up image" style="border-radius :50%"></figure>
+                        <a href="view_sellers.php" class="signup-image-link">Back</a>
                     </div>
                 </div>
             </div>

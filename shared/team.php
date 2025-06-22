@@ -1,3 +1,7 @@
+<?php
+include 'session_active.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,10 +44,10 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html" class="active">Home</a></li>
-          <li><a href="team.html">Team</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="../authentication/register.php"><u>Get Started</u></a></li>
+          <li><a href="index.php" class="active">Home</a></li>
+          <li><a href="team.php">Team</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><?php displayUserSession(); ?></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -76,7 +80,7 @@
 
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
             <div class="member-img">
-              <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="">
+              <img src="../assets/img/team/team-1.jpg" class="img-fluid" alt="">
               <div class="social">
                 <a href="https://github.com/Chamodcoder"><i class="bi bi-github"></i></a>
                 <a href="https://www.linkedin.com/in/chamod-chathuranga-091113327/"><i class="bi bi-linkedin"></i></a>
@@ -90,7 +94,7 @@
 
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
             <div class="member-img">
-              <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
+              <img src="../assets/img/team/team-2.jpg" class="img-fluid" alt="">
               <div class="social">
                 <a href="https://github.com/KavinduAluthwaththa"><i class="bi bi-github"></i></a>
                 <a href="linkedin.com/in/cloud-walk3r/"><i class="bi bi-linkedin"></i></a>
@@ -104,7 +108,7 @@
 
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
             <div class="member-img">
-              <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
+              <img src="../assets/img/team/team-3.jpg" class="img-fluid" alt="">
               <div class="social">
                 <a href="https://github.com/Mariettrodrigo"><i class="bi bi-github"></i></a>
                 <a href="https://www.linkedin.com/in/mariyeta-rodrigo-38a49b299?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="bi bi-linkedin"></i></a>

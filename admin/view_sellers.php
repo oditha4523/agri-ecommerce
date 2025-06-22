@@ -17,14 +17,13 @@ $sellers = $conn->query("SELECT * FROM sellers");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mother Dashboard</title>
+    <title>View Sellers</title>
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 <body>
     <div class="dashboard-container">
         <div class="dashboard-header">
             <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2>
-            <img src="<?php echo $_SESSION['profile_picture']; ?>" alt="Profile Picture" class="profile-picture">
         </div>
 
         <div class="dashboard-section">
@@ -42,6 +41,7 @@ $sellers = $conn->query("SELECT * FROM sellers");
         </div>
 
         <div class="dashboard-footer">
+            <a href="dashboard_admin.php" class="add-child-button">Back</a>
             <a href="add_seller.php" class="add-child-button">Add Seller</a>
         </div>
 
