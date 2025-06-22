@@ -1,39 +1,48 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'admin') {
-    header("Location: login.php");
+    header("Location: ../authentication/login.php");
     exit;
 }
 include '../db/DBcon.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $baby_name = mysqli_real_escape_string($conn, $_POST['baby_name']);
-    $dob = mysqli_real_escape_string($conn, $_POST['dob']);
-    $gender = mysqli_real_escape_string($conn, $_POST['gender']);
-    $mother_id = $_SESSION['user_id'];
+// Get all sellers from the database
+$sellers_query = "SELECT seller_id, seller_name FROM sellers";
+$sellers_result = $conn->query($sellers_query);
 
-    // Insert child into Babies table
-    $sql = "INSERT INTO Babies (name, dob, gender, mother_id) VALUES ('$baby_name', '$dob', '$gender', '$mother_id')";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = mysqli_real_escape_string($conn, $_POST['product_name']);
+    $category = mysqli_real_escape_string($conn, $_POST['category']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
+    $price = mysqli_real_escape_string($conn, $_POST['price']);
+    $amount = mysqli_real_escape_string($conn, $_POST['amount']);
+    $seller_id = mysqli_real_escape_string($conn, $_POST['seller_id']);
+    
+    // Handle image upload
+    $image_path = null;
+    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = '../assets/img/products/';
+        
+        // Create directory if it doesn't exist
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        
+        $file_extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
+        $file_name = uniqid() . '.' . $file_extension;
+        $target_path = $upload_dir . $file_name;
+        
+        if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_path)) {
+            $image_path = 'assets/img/products/' . $file_name;
+        }
+    }
+
+    // Insert product into products table
+    $sql = "INSERT INTO products (seller_id, name, category, description, price, amount, image_path, availability) 
+            VALUES ('$seller_id', '$name', '$category', '$description', '$price', '$amount', '$image_path', '1')";
 
     if ($conn->query($sql) === TRUE) {
-        $baby_id = $conn->insert_id; // Get the new baby's ID
-
-        // Fetch all vaccines and schedule them based on DOB
-        $vaccines = $conn->query("SELECT vaccine_id, recommended_age FROM Vaccinations");
-
-        while ($vaccine = $vaccines->fetch_assoc()) {
-            $vaccine_id = $vaccine['vaccine_id'];
-            $recommended_age = $vaccine['recommended_age'];
-
-            // Calculate due date (DOB + recommended months)
-            $due_date = date('Y-m-d', strtotime("+$recommended_age months", strtotime($dob)));
-
-            // Insert into VaccinationRecords
-            $conn->query("INSERT INTO vaccinationrecords (baby_id, vaccine_id, vaccination_date, due_date, status) 
-                          VALUES ('$baby_id', '$vaccine_id', NULL, '$due_date', 'Pending')");
-        }
-
-        header("Location: dashboard_mother.php?success=child_added");
+        header("Location: view_products.php?success=product_added");
         exit;
     } else {
         echo "Error: " . $conn->error;
@@ -47,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register | Baby Care System</title>
+    <title>Add Product | Agri E-Commerce</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="../assets/fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -67,29 +76,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h2 class="form-title">Add Product</h2>
                         <form method="POST" class="register-form" id="register-form" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="product_name" id="baby_name" placeholder="Product Name" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="email"><i class="zmdi zmdi-calendar"></i></label>
-                                <input type="date" name="dob" id="dob" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="user_type"><i class="zmdi zmdi-account-box"></i></label>
-                                <select name="gender" id="gender" required>
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                <label for="seller_id"><i class="zmdi zmdi-account-circle"></i></label>
+                                <select name="seller_id" id="seller_id" required>
+                                    <option value="">Select Seller</option>
+                                    <?php while ($seller = $sellers_result->fetch_assoc()) { ?>
+                                        <option value="<?php echo $seller['seller_id']; ?>">
+                                            <?php echo htmlspecialchars($seller['seller_name']); ?>
+                                        </option>
+                                    <?php } ?>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label for="product_name"><i class="zmdi zmdi-shopping-basket"></i></label>
+                                <input type="text" name="product_name" id="product_name" placeholder="Product Name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="category"><i class="zmdi zmdi-bookmark"></i></label>
+                                <select name="category" id="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Seeds">Seeds</option>
+                                    <option value="Fertilizers">Fertilizers</option>
+                                    <option value="Tools">Tools</option>
+                                    <option value="Pesticides">Pesticides</option>
+                                    <option value="Equipment">Equipment</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="description"><i class="zmdi zmdi-comment-text"></i></label>
+                                <input name="description" id="description" placeholder="Product Description" rows="3" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="price"><i class="zmdi zmdi-money"></i></label>
+                                <input type="number" name="price" id="price" placeholder="Price" step="0.01" min="0" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="amount"><i class="zmdi zmdi-collection-item"></i></label>
+                                <input type="number" name="amount" id="amount" placeholder="Quantity Available" min="1" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="product_image"><i class="zmdi zmdi-image"></i></label>
+                                <input type="file" name="product_image" id="product_image" accept="image/*" required />
+                            </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                                <input type="submit" name="add_product" id="add_product" class="form-submit" value="Add Product"/>
                             </div>
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="../assets/img/Option.png" alt="Sign up image" style="border-radius :50%"></figure>
-                        <a href="view_products.php" class="signup-image-link">Back</a>
+                        <figure><img src="../assets/img/Option.png" alt="Add product image" style="border-radius: 50%"></figure>
+                        <a href="view_products.php" class="signup-image-link">Back to Products</a>
                     </div>
                 </div>
             </div>

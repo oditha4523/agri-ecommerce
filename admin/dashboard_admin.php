@@ -24,11 +24,11 @@ include '../db/DBcon.php';
 
         <div class="dashboard-section">
             <a href="view_sellers.php" class="add-child-button">Sellers</a>
-            <a href="add_product.php" class="add-child-button">Products</a>
+            <a href="view_products.php" class="add-child-button">Products</a>
         </div>
 
         <div class="dashboard-footer">
-            <a href="edit_profile.php" class="add-child-button">Edit Profile</a>
+            <a href="../shared/edit_profile.php" class="add-child-button">Edit Profile</a>
             <a href="../authentication/logout.php" class="logout-button">Logout</a>
         </div>
 

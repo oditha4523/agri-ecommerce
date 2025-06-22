@@ -18,25 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $contact = mysqli_real_escape_string($conn, $_POST['contact']);
 
-    // Handle Profile Picture Upload
-    if (!empty($_FILES["profile_picture"]["name"])) {
-        $target_dir = "uploads/";
-        $file_name = time() . "_" . basename($_FILES["profile_picture"]["name"]);
-        $target_file = $target_dir . $file_name;
-        move_uploaded_file($_FILES["profile_picture"]["tmp_name"], $target_file);
-    } else {
-        $target_file = $user['profile_picture']; // Keep existing profile picture if no new one is uploaded
-    }
-
     // Update user details
-    $sql = "UPDATE Users SET name='$name', email='$email', contact_number='$contact', profile_picture='$target_file' WHERE user_id=$user_id";
+    $sql = "UPDATE users SET name='$name', email='$email', phone='$contact' WHERE user_id=$user_id";
 
     if ($conn->query($sql) === TRUE) {
         $_SESSION['name'] = $name; // Update session name
-        $_SESSION['profile_picture'] = $target_file; // Update session profile picture
 
         // Redirect to correct dashboard
-        $redirect_page = ($user_type == "Midwife") ? "dashboard_midwife.php" : "dashboard_mother.php";
+        $redirect_page = ($user_type == "admin") ? "../admin/dashboard_admin.php" : "./user/dashboard_user.php";
         header("Location: $redirect_page?success=updated");
         exit;
     } else {
@@ -82,18 +71,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label for="contact"><i class="zmdi zmdi-phone"></i></label>
                                 <input type="text" name="contact" id="contact" value="<?php echo !empty($user['contact_number']) ? htmlspecialchars($user['contact_number']) : ''; ?>" placeholder="Enter Mobile Number" required />
                             </div>
-                            <div class="form-group">
-                                <label for="profile_picture"><i class="zmdi zmdi-camera"></i></label>
-                                <input type="file" name="profile_picture" id="profile_picture" accept="image/*">
-                            </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="update_profile" id="update_profile" class="form-submit" value="Save Changes"/>
                             </div>
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="assets/img/HomeAbout.png" alt="Sign up image"></figure>
-                        <a href="<?php echo ($user_type == 'Midwife') ? 'dashboard_midwife.php' : 'dashboard_mother.php'; ?>" class="signup-image-link">Back</a>
+                        <figure><img src="../assets/img/HomeAbout.png" alt="Sign up image"></figure>
+                        <a href="<?php echo ($user_type == 'admin') ? '../admin/dashboard_admin.php' : '../user/dashboard_user.php'; ?>" class="signup-image-link">Back</a>
                     </div>
                 </div>
             </div>

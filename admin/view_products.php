@@ -27,14 +27,17 @@ $products = $conn->query("SELECT * FROM products where availability = '1'");
         </div>
 
         <div class="dashboard-section">
-            <h3>Your Children</h3>
+            <h3>Posted Products</h3>
             <div class="card-container">
                 <?php while ($product = $products->fetch_assoc()) { ?>
                     <div class="card">
                         <h4><?php echo $product['name']; ?></h4>
                         <p>Price: <?php echo $product['price']; ?></p>
                         <p>Amount: <?php echo $product['amount']; ?></p>
-                        <a href="delete_product.php?product_id=<?php echo $product['product_id']; ?>" class="delete-button" onclick="return confirm('Are you sure you want to delete this Product?');">Delete</a>
+                        <div class="card-actions">
+                            <a href="edit_product.php?product_id=<?php echo $product['product_id']; ?>" class="edit-button">Edit</a>
+                            <a href="delete_product.php?product_id=<?php echo $product['product_id']; ?>" class="delete-button" onclick="return confirm('Are you sure you want to delete this Product?');">Delete</a>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
