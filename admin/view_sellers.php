@@ -27,7 +27,7 @@ $sellers = $conn->query("SELECT * FROM sellers");
         </div>
 
         <div class="dashboard-section">
-            <h3>Your Children</h3>
+            <h3>Registered Sellers</h3>
             <div class="card-container">
                 <?php while ($seller = $sellers->fetch_assoc()) { ?>
                     <div class="card">

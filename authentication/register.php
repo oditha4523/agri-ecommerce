@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="assets/img/ChildReg.png" alt="Sign up image"></figure>
+                        <figure><img src="../assets/img/ChildReg.png" alt="Sign up image"></figure>
                         <a href="login.php" class="signup-image-link">I am already a member</a>
                     </div>
                 </div>
