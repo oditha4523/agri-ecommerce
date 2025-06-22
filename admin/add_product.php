@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert product into products table
-    $sql = "INSERT INTO products (seller_id, name, category, description, price, amount, image_path, availability) 
+    $sql = "INSERT INTO products (seller_id, name, category, description, price, amount, image_url, availability) 
             VALUES ('$seller_id', '$name', '$category', '$description', '$price', '$amount', '$image_path', '1')";
 
     if ($conn->query($sql) === TRUE) {

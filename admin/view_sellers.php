@@ -22,19 +22,18 @@ $sellers = $conn->query("SELECT * FROM sellers");
 </head>
 <body>
     <div class="dashboard-container">
-        <div class="dashboard-header">
-            <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2>
-        </div>
-
         <div class="dashboard-section">
             <h3>Registered Sellers</h3>
             <div class="card-container">
                 <?php while ($seller = $sellers->fetch_assoc()) { ?>
                     <div class="card">
-                        <h4><?php echo $seller['seller_name']; ?></h4>
-                        <p>Phone: <?php echo $seller['phone_number']; ?></p>
-                        <p>Address: <?php echo $seller['address']; ?></p>
-                        <a href="delete_seller.php?seller_id=<?php echo $seller['seller_id']; ?>" class="delete-button" onclick="return confirm('Are you sure you want to delete this seller?');">Delete</a>
+                        <h4><?php echo htmlspecialchars($seller['seller_name']); ?></h4>
+                        <p>Phone: <?php echo htmlspecialchars($seller['phone_number']); ?></p>
+                        <p>Address: <?php echo htmlspecialchars($seller['address']); ?></p>
+                        <div class="card-actions">
+                            <a href="edit_seller.php?user_id=<?php echo $seller['seller_id']; ?>" class="add-child-button">Edit</a>
+                            <a href="delete_seller.php?user_id=<?php echo $seller['seller_id']; ?>" class="delete-button" onclick="return confirm('Are you sure you want to delete this seller?');">Delete</a>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
