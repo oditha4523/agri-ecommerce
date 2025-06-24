@@ -45,7 +45,7 @@ include 'session_active.php';
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php" class="active">Home</a></li>
-          <li><a href="team.php">Team</a></li>
+          <li><a href="team.php">About</a></li>
           <li><a href="contact.php">Contact</a></li>
           <li><?php displayUserSession(); ?></li>
         </ul>
@@ -67,30 +67,14 @@ include 'session_active.php';
 
           <div class="carousel-item active">
             <div class="carousel-container">
-              <h2>Welcome to BabyCare</h2>
-              <p>Welcome to Baby Care Reminder System, your reliable solution for staying on top of your baby's vaccination schedule. Say goodbye to missed injections and unnecessary worries! Our automated system sends timely reminders to ensure your baby receives the necessary vaccinations, while also providing valuable information and support. Join us in safeguarding your baby's health and well-being every step of the way.</p>
+              <h2>Welcome to Agro Vista</h2>
+              <p>
+                Discover the rich heritage and craftsmanship behind Sri Lanka’s finest agri-products. From pure Ceylon cinnamon and traditional kithul to handmade teas and dry fish delicacies, our platform connects you with passionate local producers. Explore, support, and shop directly from trusted sellers – all in one place.
+                In addition, don’t miss our special segment dedicated to underutilized fruits in Sri Lanka, featuring informative videos that highlight their unique value, benefits, and potential for innovation.
+              </p>
               <a href="#about" class="btn-get-started">Read More</a>
             </div>
           </div><!-- End Carousel Item -->
-
-          <div class="carousel-item">
-            <div class="carousel-container">
-              <h2>Timely Injections for Healthy Beginnings</h2>
-              <p>Stay informed and empowered with our vaccination information hub. Learn about the importance of vaccinations, recommended schedules for your baby's first year, and benefits of each vaccine. Access reliable resources to address concerns and make informed decisions about your child's health, ensuring their well-being with confidence.</p>
-              <a href="#about" class="btn-get-started">Read More</a>
-            </div>
-          </div><!-- End Carousel Item -->
-
-          <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-          </a>
-
-          <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-          </a>
-
-          <ol class="carousel-indicators"></ol>
-
         </div>
 
       </div>
@@ -109,8 +93,7 @@ include 'session_active.php';
               <div class="icon">
               <i class="bi bi-bell"></i>
               </div>
-              <h3>Timely Notifications</h3>
-              <p>Receive automated reminders and notifications for your baby's upcoming vaccination appointments. Never miss an important immunization date with our smart scheduling system that keeps you informed well in advance.</p>
+              <h3>Dry Fish</h3>
             </div>
           </div><!-- End Service Item -->
 
@@ -119,8 +102,7 @@ include 'session_active.php';
               <div class="icon">
                 <i class="bi bi-info-circle"></i>
               </div>
-              <h3>Vaccine Information</h3>
-              <p>Access comprehensive information about each vaccine, including benefits, recommended schedules, and potential side effects. Stay informed about your baby's immunization journey with detailed educational resources and expert guidance.</p>
+              <h3>Cinnamon</h3>
             </div>
           </div><!-- End Service Item -->
 
@@ -129,8 +111,7 @@ include 'session_active.php';
               <div class="icon">
               <i class="bi bi-chat-dots"></i>
               </div>
-              <h3>Communication Platform</h3>
-              <p>Connect directly with healthcare professionals and midwives through our secure messaging platform. Get expert advice, ask questions about your baby's health, and receive personalized guidance from qualified medical professionals anytime you need support.</p>
+              <h3>Kithul</h3>
             </div>
           </div><!-- End Service Item -->
 
@@ -139,8 +120,7 @@ include 'session_active.php';
               <div class="icon">
               <i class="bi bi-calendar-check"></i>
               </div>
-              <h3>Health Record Tracking</h3>
-              <p>Maintain a complete digital record of your baby's vaccination history and health milestones. Track immunization progress, store important medical documents, and generate reports for healthcare visits with our comprehensive record-keeping system.</p>
+              <h3>Handmade Tea</h3>
             </div>
           </div><!-- End Service Item -->
         </div>
@@ -159,17 +139,9 @@ include 'session_active.php';
             <img src="../assets/img/about.jpg" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
-            <h3>Empowering Parents, Protecting Futures.</h3>
+            <h3>Our Mission.</h3>
             <p class="fst-italic">
-              At BabyCare, we believe every child deserves a healthy start in life. Our mission is to simplify healthcare for new parents through technology and trusted information.
-            </p>
-            <ul>
-              <li><i class="bi bi-check2-all"></i> <span>The system sends timely, automated reminders to parents about their baby's upcoming vaccination dates, ensuring no immunization is missed.</span></li>
-              <li><i class="bi bi-check2-all"></i> <span>Parents can easily access up-to-date details on vaccines, including their benefits, recommended timelines, and any possible side effects.</span></li>
-              <li><i class="bi bi-check2-all"></i> <span>Midwives and healthcare professionals can securely communicate with parents through an integrated chat system, fostering personalized guidance and trust.</span></li>
-            </ul>
-            <p>
-              We are committed to making vaccination tracking and parental support more accessible. By blending innovation with empathy, BabyCare stands beside every parent in safeguarding their child’s health from day one.
+              To empower Sri Lankan producers of Cinnamon, Kithul products, Handmade Tea, and Dry Fish by providing a trusted digital marketplace that enhances visibility, facilitates fair trade, and connects them directly with consumers and buyers island wide and globally, while also promoting awareness and appreciation of Sri Lanka’s underutilized fruits through dedicated video content. 
             </p>
           </div>
         </div>
@@ -183,7 +155,7 @@ include 'session_active.php';
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Features</h2>
+        <h2>Our Vision</h2>
       </div><!-- End Section Title -->
 
       <div class="container">
@@ -193,15 +165,9 @@ include 'session_active.php';
             <img src="assets/img/features-1.svg" class="img-fluid" alt="">
           </div>
           <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
-            <h3>Features of BabyCare System.</h3>
             <p class="fst-italic">
-              Discover how BabyCare enhances your parenting journey with powerful tools and thoughtful design.
+              To create a dynamic digital platform that connects islandwide sellers and buyers of Cinnamon, Kithul products, Handmade Tea, and Dry Fish—promoting local entrepreneurship, cultural heritage, and sustainable trade across Sri Lanka and beyond, while also raising awareness on the value of underutilized fruits through dedicated video content. 
             </p>
-            <ul>
-              <li><i class="bi bi-check"></i><span>The system will send automated reminders to parents about their baby's upcoming vaccination dates.</span></li>
-              <li><i class="bi bi-check"></i> <span>Users can access details about different vaccines, including their benefits and potential side effects.</span></li>
-              <li><i class="bi bi-check"></i> <span>Midwives can use the system to communicate with parents, potentially through a chat feature.</span></li>
-            </ul>
           </div>
         </div><!-- Features Item -->
 
