@@ -39,13 +39,13 @@ include 'session_active.php';
 
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="" style="border-radius: 50%;">
-        <h1 class="sitename">BabyCare</h1>
+        <h1 class="sitename">Agro Vista</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li><a href="team.php" class="active">Team</a></li>
+          <li><a href="team.php" class="active">About</a></li>
           <li><a href="contact.php">Contact</a></li>
           <li><?php displayUserSession(); ?></li>
         </ul>
@@ -60,12 +60,14 @@ include 'session_active.php';
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container position-relative">
-        <h1>Team</h1>
-        <p>Our team is composed of passionate and dedicated professionals who bring diverse skills and innovative ideas to the table. With a shared commitment to excellence, we collaborate seamlessly to achieve our goals and deliver exceptional results. Together, we strive to create impactful solutions that make a difference in the world.</p>
+        <h1>About</h1>
+        <p>
+          This Digital Trade Fair is organized by the undergraduates of the Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka. It is a part of our academic initiative to promote and support local agricultural industries by introducing high-quality Sri Lankan products such as kithul, cinnamon, dry fish, and tea to both local and international markets.
+        </p>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">Team</li>
+            <li class="current">About</li>
           </ol>
         </nav>
       </div>
