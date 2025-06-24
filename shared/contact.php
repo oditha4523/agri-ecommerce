@@ -39,13 +39,13 @@ include 'session_active.php';
 
       <a href="index.html" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="" style="border-radius: 50%;">
-        <h1 class="sitename">BabyCare</h1>
+        <h1 class="sitename">Agro Vista</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li><a href="team.php">Team</a></li>
+          <li><a href="team.php">About</a></li>
           <li><a href="contact.php" class="active">Contact</a></li>
           <li><?php displayUserSession(); ?></li>
         </ul>
