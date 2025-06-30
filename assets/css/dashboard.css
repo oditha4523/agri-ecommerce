@@ -449,6 +449,7 @@ body {
 }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .card-actions {
     display: flex;
     gap: 10px;
@@ -468,6 +469,8 @@ body {
     background-color: #0056b3;
 }
 =======
+=======
+>>>>>>> Stashed changes
 
  .slideshow-container {
       width: 100%;
@@ -586,5 +589,9 @@ img {
 .container {
   width:45%;  
   display:inline-block;
+<<<<<<< Updated upstream
+  }
+>>>>>>> Stashed changes
+=======
   }
 >>>>>>> Stashed changes

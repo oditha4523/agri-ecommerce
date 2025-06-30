@@ -12,6 +12,9 @@ $user_id = $_SESSION['user_id'];
 =======
 // Get mother's babies
 //$babies = $conn->query("SELECT * FROM Babies WHERE mother_id = $user_id");
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 ?>
 
