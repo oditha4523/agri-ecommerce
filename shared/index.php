@@ -45,9 +45,9 @@ include 'session_active.php';
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php" class="active">Home</a></li>
-          <li><a href="team.php">About</a></li>
+          <li><a href="products.php">Products</a></li>
+          <li><a href="ufruits.php">Underutilized Fruits</a></li>
           <li><a href="contact.php">Contact</a></li>
-          <li><?php displayUserSession(); ?></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -195,9 +195,9 @@ include 'session_active.php';
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="index.html">Home</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="team.html">Team</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="vaccines.html">Vaccines</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="index.php">Home</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="products.php">Products</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="ufruits.php">Underutilized Fruits</a></li>
           </ul>
         </div>
 

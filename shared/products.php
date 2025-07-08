@@ -8,7 +8,7 @@ include 'session_active.php';
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Contact</title>
+  <title>Team</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -32,7 +32,7 @@ include 'session_active.php';
   <link href="../assets/css/main.css" rel="stylesheet">
 </head>
 
-<body class="contact-page">
+<body class="team-page">
 
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
@@ -44,10 +44,10 @@ include 'session_active.php';
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.php">Home</a></li>
-          <li><a href="products.php">Products</a></li>
+          <li><a href="index.php" class="active">Home</a></li>
+          <li><a href="products.php" class="active">Products</a></li>
           <li><a href="ufruits.php">Underutilized Fruits</a></li>
-          <li><a href="contact.php" class="active">Contact</a></li>
+          <li><a href="contact.php">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -60,81 +60,75 @@ include 'session_active.php';
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container position-relative">
-        <h1>Contact</h1>
-        <p>Have questions or want to get in touch with us? We’d love to hear from you! Whether you need more information or have feedback to share, feel free to reach out. Our team is here to assist you and ensure you get the support you need.</p>
+        <h1>About</h1>
+        <p>
+          This Digital Trade Fair is organized by the undergraduates of the Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka. It is a part of our academic initiative to promote and support local agricultural industries by introducing high-quality Sri Lankan products such as kithul, cinnamon, dry fish, and tea to both local and international markets.
+        </p>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">Contact</li>
+            <li class="current">About</li>
           </ol>
         </nav>
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    <!-- Team Section -->
+    <section id="team" class="team section">
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container">
 
-        <div class="row gy-4">
-          <div class="col-lg-6 ">
-            <div class="row gy-4">
+        <div class="row gy-5">
 
-              <div class="col-lg-12">
-                <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="200">
-                  <i class="bi bi-geo-alt"></i>
-                  <h3>Address</h3>
-                  <p>Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="col-md-12">
-                <div class="info-item d-flex flex-column justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
-                  <i class="bi bi-envelope"></i>
-                  <h3>Email Us</h3>
-                  <p>agribizdigitaltradefair@gmail.com</p>
-                </div>
-              </div><!-- End Info Item -->
-
-            </div>
-          </div>
-
-          <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-                </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="4" placeholder="Message" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <button type="submit">Send Message</button>
-                </div>
-
+          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
+            <div class="member-img">
+              <img src="../assets/img/team/team-1.jpg" class="img-fluid" alt="">
+              <div class="social">
+                <a href="https://github.com/Chamodcoder"><i class="bi bi-github"></i></a>
+                <a href="https://www.linkedin.com/in/chamod-chathuranga-091113327/"><i class="bi bi-linkedin"></i></a>
               </div>
-            </form>
-          </div><!-- End Contact Form -->
+            </div>
+            <div class="member-info text-center">
+              <h4>Chamod Chathuranga</h4>
+              <span>Team Member</span>
+            </div>
+          </div><!-- End Team Member -->
 
+          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
+            <div class="member-img">
+              <img src="../assets/img/team/team-2.jpg" class="img-fluid" alt="">
+              <div class="social">
+                <a href="https://github.com/KavinduAluthwaththa"><i class="bi bi-github"></i></a>
+                <a href="linkedin.com/in/cloud-walk3r/"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="member-info text-center">
+              <h4>Kavindu Aluthwaththa</h4>
+              <span>Team Member</span>
+            </div>
+          </div><!-- End Team Member -->
+
+          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
+            <div class="member-img">
+              <img src="../assets/img/team/team-3.jpg" class="img-fluid" alt="">
+              <div class="social">
+                <a href="https://github.com/Mariettrodrigo"><i class="bi bi-github"></i></a>
+                <a href="https://www.linkedin.com/in/mariyeta-rodrigo-38a49b299?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+            <div class="member-info text-center">
+              <h4>Mariyeta Rodrigo</h4>
+              <span>Team Member</span>
+            </div>
+          </div><!-- End Team Member -->
         </div>
 
       </div>
 
-    </section><!-- /Contact Section -->
+    </section><!-- /Team Section -->
 
   </main>
-  
+
   <footer id="footer" class="footer dark-background">
     <div class="container footer-top">
       <div class="row gy-4">
@@ -143,9 +137,10 @@ include 'session_active.php';
             <span class="sitename">BabyCare</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>Faculty of Agricultural Sciences, </p>
-            <p>Sabaragamuwa University of Sri Lanka</p>
-            <p><strong>Email:</strong> <span>Bagribizdigitaltradefair@gmail.com</span></p>
+            <p>74/1, </p>
+            <p>Kandy Rd, Matale</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>(081) 5 612 850</span></p>
+            <p><strong>Email:</strong> <span>Babycare@gmail.com</span></p>
           </div>
         </div>
 
