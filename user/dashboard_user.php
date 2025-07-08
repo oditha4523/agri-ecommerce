@@ -8,17 +8,7 @@ include '../db/DBcon.php';
 
 $user_id = $_SESSION['user_id'];
 
-<<<<<<< Updated upstream
-=======
-// Get mother's babies
-//$babies = $conn->query("SELECT * FROM Babies WHERE mother_id = $user_id");
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
 ?>
 
 <!DOCTYPE html>
@@ -32,46 +22,61 @@ $user_id = $_SESSION['user_id'];
 <body>
     <div class="dashboard-container">
         <div class="dashboard-header">
-            <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2></div>
+            <h2>Welcome, <?php echo $_SESSION['name']; ?>!</h2>
+        </div>
+
+        <div class="slideshow-container">
+            <div class="slides">
+                <div class="slide active"><img src="../assets/img/products/tea.jpg" alt="Slide 1"></div>
+                <div class="slide"><img src="../assets/img/products/cinnomon.jpg" alt="Slide 2"></div>
+                <div class="slide"><img src="../assets/img/products/kithul.jpg" alt="Slide 3"></div>
+                <div class="slide"><img src="../assets/img/products/dry_fish.jpg" alt="Slide 4"></div>
+            </div>
+            
+            <!-- Navigation buttons -->
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+            
+            <!-- Dots indicators -->
+            <div class="dots-container">
+                <span class="dot active" onclick="currentSlideSet(0)"></span>
+                <span class="dot" onclick="currentSlideSet(1)"></span>
+                <span class="dot" onclick="currentSlideSet(2)"></span>
+                <span class="dot" onclick="currentSlideSet(3)"></span>
+            </div>
+        </div>
 
         <div class="dashboard-section">
-            <div class="slideshow-container">
-  <div class="slides">
-    <div class="slide"><img src="https://via.placeholder.com/800x450?text=Slide+1" alt="Slide 1"></div>
-    <div class="slide"><img src="https://via.placeholder.com/800x450?text=Slide+2" alt="Slide 2"></div>
-    <div class="slide"><img src="https://via.placeholder.com/800x450?text=Slide+3" alt="Slide 3"></div>
-    <div class="slide"><img src="https://via.placeholder.com/800x450?text=Slide+4" alt="Slide 4"></div>
-  </div>
-</div>
             <h3>Our Products</h3>
-            <div class="card-container">
-<div class="container">
-  <img src="https://images.unsplash.com/photo-1488628075628-e876f502d67a?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=&bg=" alt="" />
-  <p class="title">card title</p>
-  <div class="overlay"></div>
-  <div class="button"><a href="#"> BUY NOW </a></div>
-</div>
+        </div>
 
-<div class="container">
-  <img src="https://images.unsplash.com/photo-1488628075628-e876f502d67a?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=&bg=" alt="" />
-  <p class="title">card title</p>
-  <div class="overlay"></div>
-  <div class="button"><a href="#"> BUY NOW </a></div>
-</div>
-      
-<div class="container">
-  <img src="https://images.unsplash.com/photo-1488628075628-e876f502d67a?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=&bg=" alt="" />
-  <p class="title">card title</p>
-  <div class="overlay"></div>
-  <div class="button"><a href="#"> BUY NOW </a></div>
-</div>
+        <div class="card-container">
+            <div class="container">
+                <img src="../assets/img/products/cinnomon.jpg" alt="" />
+                <p class="title">CINNOMON</p>
+                <div class="overlay"></div>
+                <div class="button"><a href="#"> BUY NOW </a></div>
+            </div><br>
 
-<div class="container">
-  <img src="https://images.unsplash.com/photo-1488628075628-e876f502d67a?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=&bg=" alt="" />
-  <p class="title">card title</p>
-  <div class="overlay"></div>
-  <div class="button"><a href="#"> BUY NOW </a></div>
-</div>
+            <div class="container">
+                <img src="../assets/img/products/kithul.jpg" alt="" />
+                <p class="title">KITHUL</p>
+                <div class="overlay"></div>
+                <div class="button"><a href="#"> BUY NOW </a></div>
+            </div>
+            
+            <div class="container">
+                <img src="../assets/img/products/tea.jpg" alt="" />
+                <p class="title">HANDMADE TEA</p>
+                <div class="overlay"></div>
+                <div class="button"><a href="#"> BUY NOW </a></div>
+            </div><br>
+
+            <div class="container">
+                <img src="../assets/img/products/dry_fish.jpg" alt="" />
+                <p class="title">DRY FISH</p>
+                <div class="overlay"></div>
+                <div class="button"><a href="#"> BUY NOW </a></div>
             </div>
         </div>
 
@@ -81,5 +86,59 @@ $user_id = $_SESSION['user_id'];
         </div>
 
     </div>
+    
+    <script>
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const totalSlides = slides.length;
+        let slideInterval;
+
+        function showSlide(index) {
+            // Remove active class from all slides and dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Add active class to current slide and dot
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function changeSlide(direction) {
+            clearInterval(slideInterval);
+            if (direction === 1) {
+                nextSlide();
+            } else {
+                prevSlide();
+            }
+            // Restart auto-play
+            slideInterval = setInterval(nextSlide, 3000);
+        }
+
+        function currentSlideSet(index) {
+            clearInterval(slideInterval);
+            currentSlide = index;
+            showSlide(currentSlide);
+            // Restart auto-play
+            slideInterval = setInterval(nextSlide, 3000);
+        }
+
+        // Initialize slideshow
+        if (slides.length > 0) {
+            showSlide(0);
+            slideInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+        }
+    </script>
 </body>
 </html>
