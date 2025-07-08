@@ -67,7 +67,7 @@ include 'session_active.php';
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">About</li>
+            <li class="current">Products</li>
           </ol>
         </nav>
       </div>
