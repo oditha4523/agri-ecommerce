@@ -1,5 +1,13 @@
 <?php
-include 'session_active.php';
+include '../db/DBcon.php';
+
+// Fetch products with category "UnderUtilized"
+$sql = "SELECT p.*, s.seller_name 
+        FROM products p 
+        JOIN sellers s ON p.seller_id = s.seller_id 
+        WHERE p.category = 'UnderUtilized' 
+        ORDER BY p.product_id DESC";
+$result = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +16,7 @@ include 'session_active.php';
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Team</title>
+  <title>Underutilized Fruits</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -30,6 +38,61 @@ include 'session_active.php';
 
   <!-- Main CSS File -->
   <link href="../assets/css/main.css" rel="stylesheet">
+
+  <!-- Custom CSS for Products -->
+  <style>
+    .product-category {
+      background: #28a745;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    .social .bi-play-circle-fill {
+      font-size: 24px;
+      color: #dc3545;
+      transition: color 0.3s ease;
+    }
+    
+    .social .bi-play-circle-fill:hover {
+      color: #c82333;
+    }
+    
+    .product-actions .btn {
+      padding: 8px 15px;
+      font-size: 14px;
+      border-radius: 20px;
+    }
+    
+    .no-products {
+      padding: 50px 20px;
+      color: #666;
+    }
+    
+    .no-products h3 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    
+    .member-img img {
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    
+    .member-info h4 {
+      color: #2c5530;
+      margin-bottom: 10px;
+    }
+    
+    .member-info span {
+      color: #666;
+      font-style: italic;
+    }
+  </style>
 </head>
 
 <body class="team-page">
@@ -60,7 +123,7 @@ include 'session_active.php';
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container position-relative">
-        <h1>About</h1>
+        <h1>Underutilized Fruits</h1>
         <p>
           This Digital Trade Fair is organized by the undergraduates of the Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka. It is a part of our academic initiative to promote and support local agricultural industries by introducing high-quality Sri Lankan products such as kithul, cinnamon, dry fish, and tea to both local and international markets.
         </p>
@@ -73,59 +136,67 @@ include 'session_active.php';
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Team Section -->
-    <section id="team" class="team section">
+    <!-- Products Section -->
+    <section id="products" class="team section">
 
       <div class="container">
 
         <div class="row gy-5">
 
+          <?php
+          if ($result && $result->num_rows > 0) {
+              $default_images = ['685799f1d8046.jpg', '68579a602c35c.jpg']; // Available images
+              $image_index = 0;
+              
+              while($row = $result->fetch_assoc()) {
+                  // Use available images in rotation or a default
+                  $display_image = "../assets/img/products/" . $default_images[$image_index % count($default_images)];
+                  $image_index++;
+                  
+                  // If there's a video URL, we could show a video thumbnail or play button
+                  $video_url = $row['video_url'];
+          ?>
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
             <div class="member-img">
-              <img src="../assets/img/team/team-1.jpg" class="img-fluid" alt="">
+              <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
               <div class="social">
-                <a href="https://github.com/Chamodcoder"><i class="bi bi-github"></i></a>
-                <a href="https://www.linkedin.com/in/chamod-chathuranga-091113327/"><i class="bi bi-linkedin"></i></a>
+                <?php if(!empty($video_url)): ?>
+                  <a href="<?php echo htmlspecialchars($video_url); ?>" target="_blank" title="Watch Video">
+                    <i class="bi bi-play-circle-fill"></i>
+                  </a>
+                <?php endif; ?>
+                <span class="product-category">Underutilized Fruit</span>
               </div>
             </div>
             <div class="member-info text-center">
-              <h4>Chamod Chathuranga</h4>
-              <span>Team Member</span>
+              <h4><?php echo htmlspecialchars($row['name']); ?></h4>
+              <span>Seller: <?php echo htmlspecialchars($row['seller_name']); ?></span>
+              <?php if(!empty($video_url)): ?>
+                <div class="product-actions mt-3">
+                  <a href="<?php echo htmlspecialchars($video_url); ?>" target="_blank" class="btn btn-primary btn-sm">
+                    <i class="bi bi-play-circle"></i> Watch Video
+                  </a>
+                </div>
+              <?php endif; ?>
             </div>
-          </div><!-- End Team Member -->
+          </div><!-- End Product -->
+          <?php
+              }
+          } else {
+          ?>
+          <div class="col-12 text-center">
+            <div class="no-products">
+              <h3>No Underutilized Fruits Available</h3>
+              <p>We're currently updating our inventory. Please check back soon for new underutilized fruit products!</p>
+            </div>
+          </div>
+          <?php } ?>
 
-          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
-            <div class="member-img">
-              <img src="../assets/img/team/team-2.jpg" class="img-fluid" alt="">
-              <div class="social">
-                <a href="https://github.com/KavinduAluthwaththa"><i class="bi bi-github"></i></a>
-                <a href="linkedin.com/in/cloud-walk3r/"><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-            <div class="member-info text-center">
-              <h4>Kavindu Aluthwaththa</h4>
-              <span>Team Member</span>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
-            <div class="member-img">
-              <img src="../assets/img/team/team-3.jpg" class="img-fluid" alt="">
-              <div class="social">
-                <a href="https://github.com/Mariettrodrigo"><i class="bi bi-github"></i></a>
-                <a href="https://www.linkedin.com/in/mariyeta-rodrigo-38a49b299?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="bi bi-linkedin"></i></a>
-              </div>
-            </div>
-            <div class="member-info text-center">
-              <h4>Mariyeta Rodrigo</h4>
-              <span>Team Member</span>
-            </div>
-          </div><!-- End Team Member -->
         </div>
 
       </div>
 
-    </section><!-- /Team Section -->
+    </section><!-- /Products Section -->
 
   </main>
 
@@ -196,3 +267,10 @@ include 'session_active.php';
 </body>
 
 </html>
+
+<?php
+// Close database connection
+if(isset($conn)) {
+    $conn->close();
+}
+?>

@@ -44,7 +44,7 @@ include 'session_active.php';
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.php" class="active">Home</a></li>
+          <li><a href="index.php">Home</a></li>
           <li><a href="products.php" class="active">Products</a></li>
           <li><a href="ufruits.php">Underutilized Fruits</a></li>
           <li><a href="contact.php">Contact</a></li>
@@ -60,7 +60,7 @@ include 'session_active.php';
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container position-relative">
-        <h1>About</h1>
+        <h1>Products</h1>
         <p>
           This Digital Trade Fair is organized by the undergraduates of the Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka. It is a part of our academic initiative to promote and support local agricultural industries by introducing high-quality Sri Lankan products such as kithul, cinnamon, dry fish, and tea to both local and international markets.
         </p>
