@@ -1,5 +1,9 @@
 <?php
 include 'session_active.php';
+$_SESSION['category'] = 'Utilized';
+$_SESSION['product'] = 'products';
+
+include '../db/DBcon.php';
 ?>
 
 <!DOCTYPE html>
@@ -8,7 +12,7 @@ include 'session_active.php';
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Team</title>
+  <title>Products - Agro Vista</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -30,6 +34,73 @@ include 'session_active.php';
 
   <!-- Main CSS File -->
   <link href="../assets/css/main.css" rel="stylesheet">
+
+  <!-- Custom CSS for Product Links -->
+  <style>
+    .product-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    
+    .product-link:hover {
+      text-decoration: none;
+      color: inherit;
+      transform: translateY(-5px);
+    }
+    
+    .container1 {
+      position: relative;
+      cursor: pointer;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+    
+    .container1:hover {
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .container1 .image {
+      opacity: 1;
+      display: block;
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: .5s ease;
+      backface-visibility: hidden;
+    }
+    
+    .container1 .middle {
+      transition: .5s ease;
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    
+    .container1:hover .image {
+      opacity: 0.3;
+    }
+    
+    .container1:hover .middle {
+      opacity: 1;
+    }
+    
+    .container1 .text {
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 16px 32px;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 
 <body class="team-page">
@@ -83,39 +154,47 @@ include 'session_active.php';
         <div class="row gy-4">
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <div class="container1">
-              <img src="../assets/img/products/cinnomon.jpg" alt="Ceylon Cinnamon" class="image">
-              <div class="middle">
-                <div class="text">Ceylon Cinnamon</div>
+            <a href="viewproducts.php?category=cinnamon" class="product-link">
+              <div class="container1">
+                <img src="../assets/img/products/cinnomon.jpg" alt="Ceylon Cinnamon" class="image">
+                <div class="middle">
+                  <div class="text">Ceylon Cinnamon</div>
+                </div>
               </div>
-            </div>
+            </a>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <div class="container1">
-              <img src="../assets/img/products/kithul.jpg" alt="Kithul Products" class="image">
-              <div class="middle">
-                <div class="text">Kithul Products</div>
+            <a href="viewproducts.php?category=kithul" class="product-link">
+              <div class="container1">
+                <img src="../assets/img/products/kithul.jpg" alt="Kithul Products" class="image">
+                <div class="middle">
+                  <div class="text">Kithul Products</div>
+                </div>
               </div>
-            </div>
+            </a>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <div class="container1">
-              <img src="../assets/img/products/tea.jpg" alt="Handmade Tea" class="image">
-              <div class="middle">
-                <div class="text">Handmade Tea</div>
+            <a href="viewproducts.php?category=tea" class="product-link">
+              <div class="container1">
+                <img src="../assets/img/products/tea.jpg" alt="Handmade Tea" class="image">
+                <div class="middle">
+                  <div class="text">Handmade Tea</div>
+                </div>
               </div>
-            </div>
+            </a>
           </div><!-- End Service Item -->
 
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <div class="container1">
-              <img src="../assets/img/products/dry_fish.jpg" alt="Dry Fish" class="image">
-              <div class="middle">
-                <div class="text">Dry Fish</div>
+            <a href="viewproducts.php?category=dry_fish" class="product-link">
+              <div class="container1">
+                <img src="../assets/img/products/dry_fish.jpg" alt="Dry Fish" class="image">
+                <div class="middle">
+                  <div class="text">Dry Fish</div>
+                </div>
               </div>
-            </div>
+            </a>
           </div><!-- End Service Item -->
         </div>
 

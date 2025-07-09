@@ -2,11 +2,25 @@
 include 'session_active.php';
 include '../db/DBcon.php';
 
-// Fetch products with category "UnderUtilized"
+// Get the category from URL parameter
+$category = isset($_GET['category']) ? $_GET['category'] : '';
+
+// Map category URL parameters to display names
+$category_names = [
+    'cinnamon' => 'Ceylon Cinnamon',
+    'kithul' => 'Kithul Products',
+    'tea' => 'Handmade Tea',
+    'dry_fish' => 'Dry Fish'
+];
+
+$page_title = isset($category_names[$category]) ? $category_names[$category] : 'Products';
+
+// Fetch products with category "Utilized" - you can modify this query based on your needs
+// For now, we'll show all products since the current database structure might not have specific subcategories
 $sql = "SELECT p.*, s.seller_name 
         FROM products p 
         JOIN sellers s ON p.seller_id = s.seller_id 
-        WHERE p.category = 'UnderUtilized' 
+        WHERE p.category = 'Utilized' 
         ORDER BY p.product_id DESC";
 $result = $conn->query($sql);
 ?>
@@ -17,7 +31,7 @@ $result = $conn->query($sql);
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Underutilized Fruits</title>
+  <title><?php echo htmlspecialchars($page_title); ?> - Agro Vista</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -42,7 +56,7 @@ $result = $conn->query($sql);
 
   <!-- Custom CSS for Products -->
   <style>
-    .product-category {
+    .product-category-badge {
       background: #28a745;
       color: white;
       padding: 4px 8px;
@@ -110,7 +124,7 @@ $result = $conn->query($sql);
         <ul>
           <li><a href="index.php">Home</a></li>
           <li><a href="products.php">Products</a></li>
-          <li><a href="ufruits.php" class="active">Underutilized Fruits</a></li>
+          <li><a href="ufruits.php">Underutilized Fruits</a></li>
           <li><a href="contact.php">Contact</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -124,14 +138,16 @@ $result = $conn->query($sql);
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container position-relative">
-        <h1>Underutilized Fruits</h1>
+        <h1><?php echo htmlspecialchars($page_title); ?></h1>
         <p>
-          This Digital Trade Fair is organized by the undergraduates of the Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka. It is a part of our academic initiative to promote and support local agricultural industries by introducing high-quality Sri Lankan products such as kithul, cinnamon, dry fish, and tea to both local and international markets.
+          Discover high-quality Sri Lankan agricultural products from trusted local sellers. 
+          Each product represents the rich heritage and expertise of our farming communities.
         </p>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.php">Home</a></li>
-            <li class="current">Underutilized Fruits</li>
+            <li><a href="products.php">Products</a></li>
+            <li class="current"><?php echo htmlspecialchars($page_title); ?></li>
           </ol>
         </nav>
       </div>
@@ -166,7 +182,7 @@ $result = $conn->query($sql);
                     <i class="bi bi-play-circle-fill"></i>
                   </a>
                 <?php endif; ?>
-                <span class="product-category">Underutilized Fruit</span>
+                <span class="product-category-badge"><?php echo htmlspecialchars($page_title); ?></span>
               </div>
             </div>
             <div class="member-info text-center">
@@ -187,8 +203,8 @@ $result = $conn->query($sql);
           ?>
           <div class="col-12 text-center">
             <div class="no-products">
-              <h3>No Underutilized Fruits Available</h3>
-              <p>We're currently updating our inventory. Please check back soon for new underutilized fruit products!</p>
+              <h3>No Products Available</h3>
+              <p>We're currently updating our inventory. Please check back soon for new products!</p>
             </div>
           </div>
           <?php } ?>
@@ -222,12 +238,13 @@ $result = $conn->query($sql);
             <li><i class="bi bi-chevron-right"></i> <a href="index.php">Home</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="products.php">Products</a></li>
             <li><i class="bi bi-chevron-right"></i> <a href="ufruits.php">Underutilized Fruits</a></li>
+            <li><i class="bi bi-chevron-right"></i> <a href="contact.php">Contact</a></li>
           </ul>
         </div>
 
         <div class="col-lg-4 col-md-12">
           <h4>Follow Us</h4>
-          <p>Stay connected with us and keep up with the latest updates, news, and insights from our agricultural community and discover unique underutilized fruits from Sri Lanka.</p>
+          <p>Stay connected with us and keep up with the latest updates, news, and insights from our agricultural community.</p>
           <div class="social-links d-flex">
             <a href=""><i class="bi bi-twitter-x"></i></a>
             <a href=""><i class="bi bi-facebook"></i></a>
