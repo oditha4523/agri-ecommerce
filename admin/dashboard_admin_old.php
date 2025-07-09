@@ -136,9 +136,51 @@ include '../db/DBcon.php';
                 <h1>Welcome to Admin Dashboard</h1>
                 <p class="mb-0">Hello, <?php echo htmlspecialchars($_SESSION['name'] ?? 'Administrator'); ?>! Manage your agri-ecommerce platform efficiently.</p>
             </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="../authentication/logout.php" class="btn btn-outline-light">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
-            <!-- Statistics Grid -->
-            <div class="stats-grid" data-aos="fade-up" data-aos-delay="100">
+    <!-- Admin Navigation -->
+    <nav class="admin-nav">
+        <div class="container">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active" href="dashboard_admin.php">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="view_products.php">
+                        <i class="bi bi-box-seam"></i> Products
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="view_sellers.php">
+                        <i class="bi bi-people"></i> Sellers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../shared/index.php">
+                        <i class="bi bi-house"></i> View Site
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <div class="container">
+            
+            <!-- Stats Cards -->
+            <div class="stats-grid">
                 <?php
                 // Get statistics
                 $total_products = $conn->query("SELECT COUNT(*) as count FROM products")->fetch_assoc()['count'];
@@ -169,7 +211,7 @@ include '../db/DBcon.php';
             </div>
 
             <!-- Action Cards -->
-            <div class="row" data-aos="fade-up" data-aos-delay="200">
+            <div class="row">
                 <div class="col-lg-6">
                     <div class="dashboard-card">
                         <h3><i class="bi bi-box-seam"></i> Product Management</h3>
@@ -210,7 +252,7 @@ include '../db/DBcon.php';
             </div>
 
             <!-- Quick Actions -->
-            <div class="dashboard-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="dashboard-card">
                 <h3><i class="bi bi-lightning"></i> Quick Actions</h3>
                 <div class="row">
                     <div class="col-md-3">
@@ -237,22 +279,10 @@ include '../db/DBcon.php';
             </div>
 
         </div>
-    </main>
+    </div>
 
-    <!-- Vendor JS Files -->
+    <!-- Bootstrap JS -->
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/aos/aos.js"></script>
-    
-    <!-- Main JS File -->
-    <script src="../assets/js/main.js"></script>
-    
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'slide'
-        });
-    </script>
 
 </body>
 </html>

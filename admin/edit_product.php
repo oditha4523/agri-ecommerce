@@ -66,22 +66,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Edit Product | Agro Vista Admin</title>
 
-    <!-- Font Icon -->
-    <link rel="stylesheet" href="../assets/fonts/material-icon/css/material-design-iconic-font.min.css">
-
-    <!-- Main css -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Favicons -->
+    <link href="../assets/img/favicon.png" rel="icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    
+    <!-- Vendor CSS Files -->
+    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+    
+    <!-- Main CSS File -->
+    <link href="../assets/css/main.css" rel="stylesheet">
     
     <!-- Custom CSS -->
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+        
+        .form-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
         .category-info {
             background: #f8f9fa;
             border: 1px solid #dee2e6;
-            border-radius: 5px;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 12px;
-            color: #6c757d;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #2c5530;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-label i {
+            margin-right: 8px;
+            color: #4CAF50;
+        }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
         }
         
         .form-group small {
@@ -92,62 +167,113 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
-<body>
+<body class="index-page">
 
-    <div class="main">
+    <?php include 'admin_header.php'; ?>
 
-        <!-- Sign up form -->
-        <section class="signup">
-            <div class="container">
-                <div class="signup-content">
-                    <div class="signup-form">
-                        <h2 class="form-title">Edit Product</h2>
-                        <form method="POST" class="register-form" id="register-form" enctype="multipart/form-data">
-                            <div class="form-group">
-                                <label for="seller_id"><i class="zmdi zmdi-account-circle"></i></label>
-                                <select name="seller_id" id="seller_id" required>
-                                    <option value="">Select Seller</option>
-                                    <?php while ($seller = $sellers_result->fetch_assoc()) { ?>
-                                        <option value="<?php echo $seller['seller_id']; ?>" 
-                                                <?php echo ($seller['seller_id'] == $product['seller_id']) ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($seller['seller_name']); ?>
-                                        </option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="product_name"><i class="zmdi zmdi-shopping-basket"></i></label>
-                                <input type="text" name="product_name" id="product_name" placeholder="Product Name" value="<?php echo htmlspecialchars($product['name']); ?>" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="category"><i class="zmdi zmdi-bookmark"></i></label>
-                                <select name="category" id="category" required>
-                                    <option value="">Select Category</option>
-                                    <option value="Utilized" <?php echo ($product['category'] == 'Utilized') ? 'selected' : ''; ?>>Utilized Products</option>
-                                    <option value="UnderUtilized" <?php echo ($product['category'] == 'UnderUtilized') ? 'selected' : ''; ?>>UnderUtilized Fruits</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="video_url"><i class="zmdi zmdi-videocam"></i></label>
-                                <input type="url" name="video_url" id="video_url" placeholder="Video URL (optional)" value="<?php echo htmlspecialchars($product['video_url'] ?? ''); ?>" />
-                            </div>
-                            <div class="form-group">
-                                <label for="product_image"><i class="zmdi zmdi-image"></i></label>
-                                <input type="file" name="product_image" id="product_image" accept="image/*" />
-                                <small style="color: #666; font-size: 12px; margin-top: 5px; display: block;">Image upload is optional. Default images are used for display.</small>
-                            </div>
-                            <div class="form-group form-button">
-                                <input type="submit" name="edit_product" id="edit_product" class="form-submit" value="Save Changes"/>
-                            </div>
-                        </form>
+    <main class="main">
+        <div class="container">
+            <div class="form-container" data-aos="fade-up">
+                <div class="form-header">
+                    <h2><i class="bi bi-pencil-square"></i> Edit Product</h2>
+                    <p class="mb-0">Update product information</p>
+                </div>
+                
+                <div class="form-body p-4">
+                    <div class="category-info">
+                        <h5><i class="bi bi-info-circle"></i> Category Information</h5>
+                        <ul class="mb-0">
+                            <li><strong>Utilized Products:</strong> Traditional Sri Lankan products like Cinnamon, Kithul, Tea, and Dry Fish</li>
+                            <li><strong>UnderUtilized Fruits:</strong> Indigenous and rare fruits that are underutilized in the market</li>
+                        </ul>
                     </div>
-                    <div class="signup-image">
-                        <figure><img src="../assets/img/Option.png" alt="Edit product image" style="border-radius: 50%"></figure>
-                        <a href="view_products.php" class="signup-image-link">Back to Products</a>
-                    </div>
+                    
+                    <form method="POST" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="seller_id" class="form-label">
+                                <i class="bi bi-person-circle"></i> Select Seller
+                            </label>
+                            <select name="seller_id" id="seller_id" class="form-select" required>
+                                <option value="">Select Seller</option>
+                                <?php while ($seller = $sellers_result->fetch_assoc()) { ?>
+                                    <option value="<?php echo $seller['seller_id']; ?>" 
+                                            <?php echo ($seller['seller_id'] == $product['seller_id']) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($seller['seller_name']); ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product_name" class="form-label">
+                                <i class="bi bi-box-seam"></i> Product Name
+                            </label>
+                            <input type="text" name="product_name" id="product_name" class="form-control" 
+                                   placeholder="Enter product name" value="<?php echo htmlspecialchars($product['name']); ?>" required />
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category" class="form-label">
+                                <i class="bi bi-bookmark"></i> Product Category
+                            </label>
+                            <select name="category" id="category" class="form-select" required>
+                                <option value="">Select Category</option>
+                                <option value="Utilized" <?php echo ($product['category'] == 'Utilized') ? 'selected' : ''; ?>>Utilized Products</option>
+                                <option value="UnderUtilized" <?php echo ($product['category'] == 'UnderUtilized') ? 'selected' : ''; ?>>UnderUtilized Fruits</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="video_url" class="form-label">
+                                <i class="bi bi-camera-video"></i> Video URL
+                            </label>
+                            <input type="url" name="video_url" id="video_url" class="form-control" 
+                                   placeholder="Enter YouTube or video URL (optional)" value="<?php echo htmlspecialchars($product['video_url'] ?? ''); ?>" />
+                            <small>Optional: Add a video link to showcase your product</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product_image" class="form-label">
+                                <i class="bi bi-image"></i> Product Image
+                            </label>
+                            <input type="file" name="product_image" id="product_image" class="form-control" accept="image/*" />
+                            <small>Optional: Upload a new image. Default images are used for display.</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" name="edit_product" class="btn btn-submit">
+                                <i class="bi bi-check-circle"></i> Save Changes
+                            </button>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <a href="view_products.php" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Back to Products
+                            </a>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </section>
+        </div>
+    </main>
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/aos/aos.js"></script>
+    
+    <!-- Main JS File -->
+    <script src="../assets/js/main.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'slide'
+        });
+    </script>
+
+</body>
+</html>
     </div>
 
 </body>

@@ -37,9 +37,9 @@ include 'session_active.php';
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center">
         <img src="../assets/img/logo.png" alt="" style="border-radius: 50%;">
-        <h1 class="sitename">BabyCare</h1>
+        <h1 class="sitename">Agro Vista</h1>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -185,7 +185,7 @@ include 'session_active.php';
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="d-flex align-items-center">
-            <span class="sitename">BabyCare</span>
+            <span class="sitename">Agro Vista</span>
           </a>
           <div class="footer-contact pt-3">
             <p>74/1, </p>
@@ -219,7 +219,7 @@ include 'session_active.php';
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">BabyCare</strong> <span>All Rights Reserved</span></p>
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Agro Vista</strong> <span>All Rights Reserved</span></p>
     </div>
 
   </footer>
