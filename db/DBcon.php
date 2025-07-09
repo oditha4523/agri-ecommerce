@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost"; 
 $username = "root"; 
-$password = "Rana0235"; 
-$database = "agriecom";
+$password = ""; 
+$database = "agri_ecommerce";
 
 $conn = new mysqli($servername, $username, $password, $database);
 
