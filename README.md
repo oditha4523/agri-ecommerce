@@ -179,11 +179,11 @@ This project was developed as an academic initiative. Contributions are welcome 
 
 ## 📄 License
 
-This project is developed for academic purposes by the Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka.
+This project is developed for academic purposes by the Faculty of Computing, Sabaragamuwa University of Sri Lanka.
 
 ## 🙏 Acknowledgments
 
-- Faculty of Agricultural Sciences, Sabaragamuwa University of Sri Lanka
+- Faculty of Computing, Sabaragamuwa University of Sri Lanka
 - Local farmers and producers who inspire our mission
 - Open-source community for the tools and libraries used
 
