@@ -13,9 +13,6 @@ $sellers_result = $conn->query($sellers_query);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $category = mysqli_real_escape_string($conn, $_POST['category']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
-    $amount = mysqli_real_escape_string($conn, $_POST['amount']);
     $seller_id = mysqli_real_escape_string($conn, $_POST['seller_id']);
     
     // Handle image upload
@@ -33,13 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_path = $upload_dir . $file_name;
         
         if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_path)) {
-            $image_path = 'assets/img/products/' . $file_name;
+            $video_path = 'assets/img/products/' . $file_name;
         }
     }
 
     // Insert product into products table
-    $sql = "INSERT INTO products (seller_id, name, category, description, price, amount, image_url, availability) 
-            VALUES ('$seller_id', '$name', '$category', '$description', '$price', '$amount', '$image_path', '1')";
+    $sql = "INSERT INTO products (seller_id, name, category, video_url, availability) 
+            VALUES ('$seller_id', '$name', 'Utilized', '$video_path', '1')";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: view_products.php?success=product_added");
@@ -94,12 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label for="category"><i class="zmdi zmdi-bookmark"></i></label>
                                 <select name="category" id="category" required>
                                     <option value="">Select Category</option>
-                                    <option value="Seeds">Seeds</option>
-                                    <option value="Fertilizers">Fertilizers</option>
-                                    <option value="Tools">Tools</option>
-                                    <option value="Pesticides">Pesticides</option>
-                                    <option value="Equipment">Equipment</option>
-                                    <option value="Other">Other</option>
+                                    <option value="Cinnamon">Cinnamon</option>
+                                    <option value="Kithul">Kithul</option>
+                                    <option value="Tea">Tea</option>
+                                    <option value="Dry Fish">Dry Fish</option>
                                 </select>
                             </div>
                             <div class="form-group">
