@@ -3,13 +3,11 @@ session_start();
 include '../db/DBcon.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = password_hash($_POST['pass'], PASSWORD_BCRYPT);
-    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
 
-    $sql = "INSERT INTO Users (name, email, password_hash, phone) 
-            VALUES ('$name', '$email', '$password', '$phone')";
+    $sql = "INSERT INTO Users (email, password_hash) 
+            VALUES ('$email', '$password')";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: login.php?success=registered");
@@ -46,10 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h2 class="form-title">Sign Up</h2>
                         <form method="POST" class="register-form" id="register-form" enctype="multipart/form-data">
                             <div class="form-group">
-                                <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Your Name" required />
-                            </div>
-                            <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                                 <input type="email" name="email" id="email" placeholder="Your Email" required />
                             </div>
@@ -60,10 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="form-group">
                                 <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
                                 <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="phone"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input type="text" name="phone" id="phone" placeholder="Enter Mobile Number" required />
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>

@@ -13,16 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password_hash'])) {
             $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['user_type'] = $user['user_type'];
-            $_SESSION['phone'] = $user['phone'];
-            $_SESSION['logged_in'] = true; // Add this line
 
             // Redirect to respective dashboard
             if ($user['user_type'] == 'admin') {
                 header("Location: ../admin/dashboard_admin.php");
             } else {
-                header("Location: ../user/dashboard_user.php");
+                header($error = "Invalid user type.");
             }
             exit;
         } else {
