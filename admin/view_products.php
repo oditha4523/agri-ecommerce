@@ -40,7 +40,7 @@ $products = $conn->query($query);
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,909&display=swap" rel="stylesheet">
     
     <!-- Vendor CSS Files -->
     <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -49,68 +49,6 @@ $products = $conn->query($query);
     
     <!-- Main CSS File -->
     <link href="../assets/css/main.css" rel="stylesheet">
-    
-    <!-- Custom Admin CSS -->
-    <link href="../assets/img/favicon.png" rel="icon">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
-    
-    <!-- Vendor CSS Files -->
-    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-    
-    <!-- Main CSS File -->
-    <link href="../assets/css/main.css" rel="stylesheet">
-    
-    <!-- Custom Admin CSS -->_id']) || $_SESSION['user_type'] != 'admin') {
-    header("Location: ../authentication/login.php");
-    exit;
-}
-include '../db/DBcon.php';
-
-$user_id = $_SESSION['user_id'];
-
-// Get filter parameter
-$category_filter = isset($_GET['category']) ? $_GET['category'] : '';
-
-// Build query based on filter
-$query = "
-    SELECT p.*, s.seller_name 
-    FROM products p 
-    LEFT JOIN sellers s ON p.seller_id = s.seller_id 
-";
-
-if ($category_filter) {
-    $query .= " WHERE p.category = '" . mysqli_real_escape_string($conn, $category_filter) . "'";
-}
-
-$query .= " ORDER BY p.product_id DESC";
-
-$products = $conn->query($query);
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Products - Agro Vista Admin</title>
-    
-    <!-- Favicons -->
-    <link href="../assets/img/favicon.png" rel="icon">
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap CSS -->
-    <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     
     <!-- Custom Admin CSS -->
     <style>
@@ -224,34 +162,7 @@ $products = $conn->query($query);
 <body class="index-page">
 
     <?php include 'admin_header.php'; ?>
-
-    <main class="main">
-        <div class="container admin-content">
-            <ul class="nav justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link" href="dashboard_admin.php">
-                        <i class="bi bi-speedometer2"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="view_products.php">
-                        <i class="bi bi-box-seam"></i> Products
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="view_sellers.php">
-                        <i class="bi bi-people"></i> Sellers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../shared/index.php">
-                        <i class="bi bi-house"></i> View Site
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
+    
     <!-- Main Content -->
     <div class="main-content">
         <div class="container">
@@ -342,11 +253,6 @@ $products = $conn->query($query);
                     </div>
                 <?php } ?>
             </div>
-        </div>
-
-        <div class="dashboard-footer">
-            <a href="dashboard_admin.php" class="add-child-button">Back</a>
-            <a href="add_product.php" class="add-child-button">Add Product</a>            </div>
             
             <?php if ($products->num_rows == 0): ?>
                 <div class="text-center py-5">
@@ -361,16 +267,13 @@ $products = $conn->query($query);
                                     No products have been added yet.
                                 <?php endif; ?>
                             </p>
-                            <a href="add_product.php" class="btn-admin">
-                                <i class="bi bi-plus-circle"></i> Add Your First Product
-                            </a>
                         </div>
                     </div>
                 </div>
             <?php endif; ?>
 
         </div>
-    </main>
+    </div>
 
     <!-- Vendor JS Files -->
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

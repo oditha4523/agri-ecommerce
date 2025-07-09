@@ -261,8 +261,7 @@ $result = $conn->query($sql);
           <div class="footer-contact pt-3">
             <p>Faculty of Agricultural Sciences</p>
             <p>Sabaragamuwa University of Sri Lanka</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>(081) 5 612 850</span></p>
-            <p><strong>Email:</strong> <span>agrovista@sabac.lk</span></p>
+            <p class="mt-3"><strong>Email:</strong> <span>agribizdigitaltradefair@gmail.com</span></p>
           </div>
         </div>
 

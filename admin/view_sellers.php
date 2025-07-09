@@ -39,53 +39,56 @@ $sellers = $conn->query("SELECT * FROM sellers ORDER BY seller_id DESC");
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
         }
         
-        .admin-content {
-            padding: 40px 0;
+        .admin-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .admin-nav {
+            background: #2c5530;
+            padding: 10px 0;
+        }
+        
+        .admin-nav .nav-link {
+            color: white;
+            font-weight: 500;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+        
+        .admin-nav .nav-link:hover,
+        .admin-nav .nav-link.active {
+            color: #4CAF50;
+        }
+        
+        .main-content {
+            padding: 30px 0;
         }
         
         .page-header {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 30px;
-            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
-        .seller-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
             margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
         
-        .seller-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .seller-info h4 {
-            color: #2c5530;
-            margin-bottom: 15px;
-        }
-        
-        .seller-details {
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .seller-details p {
-            margin-bottom: 8px;
-        }
-        
-        .seller-details i {
-            width: 20px;
-            color: #4CAF50;
-            margin-right: 8px;
+        .card:hover {
+            transform: translateY(-3px);
         }
         
         .btn-admin {
@@ -97,113 +100,104 @@ $sellers = $conn->query("SELECT * FROM sellers ORDER BY seller_id DESC");
             font-weight: 500;
             text-decoration: none;
             display: inline-block;
-            margin: 5px;
+            margin: 3px;
             transition: all 0.3s;
-            font-size: 14px;
         }
         
         .btn-admin:hover {
             background: linear-gradient(135deg, #45a049, #3d8b40);
             color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-            text-decoration: none;
+            transform: translateY(-1px);
         }
         
-        .btn-danger {
+        .btn-edit {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+        }
+        
+        .btn-delete {
             background: linear-gradient(135deg, #dc3545, #c82333);
-        }
-        
-        .btn-danger:hover {
-            background: linear-gradient(135deg, #c82333, #bd2130);
-            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
-        }
-        
-        .action-buttons {
-            margin-top: 30px;
-            text-align: center;
-        }
-        
-        .no-sellers {
-            text-align: center;
-            padding: 50px 20px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .no-sellers h4 {
-            color: #666;
-            margin-bottom: 20px;
         }
     </style>
 </head>
 <body class="index-page">
 
     <?php include 'admin_header.php'; ?>
-
-    <main class="main">
-        <div class="container admin-content">
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
             
             <!-- Page Header -->
-            <div class="page-header" data-aos="fade-up">
-                <h1><i class="bi bi-people"></i> Seller Management</h1>
-                <p class="mb-0">Manage registered sellers and their information</p>
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2><i class="bi bi-people"></i> Seller Management</h2>
+                        <p class="mb-0 text-muted">Manage all sellers in the system</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a href="add_seller.php" class="btn-admin">
+                            <i class="bi bi-person-plus"></i> Add New Seller
+                        </a>
+                    </div>
+                </div>
             </div>
-
-            <!-- Action Buttons -->
-            <div class="action-buttons" data-aos="fade-up" data-aos-delay="100">
-                <a href="add_seller.php" class="btn-admin">
-                    <i class="bi bi-person-plus"></i> Add New Seller
-                </a>
-                <a href="dashboard_admin.php" class="btn-admin" style="background: linear-gradient(135deg, #6c757d, #5a6268);">
-                    <i class="bi bi-arrow-left"></i> Back to Dashboard
-                </a>
-            </div>
-
-            <!-- Sellers List -->
-            <div class="row" data-aos="fade-up" data-aos-delay="200">
-                <?php if ($sellers && $sellers->num_rows > 0) { ?>
-                    <?php while ($seller = $sellers->fetch_assoc()) { ?>
-                        <div class="col-lg-6 col-md-12">
-                            <div class="seller-card">
-                                <div class="seller-info">
-                                    <h4><i class="bi bi-person-circle"></i> <?php echo htmlspecialchars($seller['seller_name']); ?></h4>
-                                    <div class="seller-details">
-                                        <p><i class="bi bi-telephone"></i> <strong>Phone:</strong> <?php echo htmlspecialchars($seller['phone_number']); ?></p>
-                                        <p><i class="bi bi-geo-alt"></i> <strong>Address:</strong> <?php echo htmlspecialchars($seller['address']); ?></p>
-                                        <p><i class="bi bi-calendar"></i> <strong>Seller ID:</strong> #<?php echo $seller['seller_id']; ?></p>
-                                    </div>
-                                    <div class="seller-actions">
-                                        <a href="edit_seller.php?seller_id=<?php echo $seller['seller_id']; ?>" class="btn-admin">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </a>
-                                        <a href="delete_seller.php?seller_id=<?php echo $seller['seller_id']; ?>" 
-                                           class="btn-admin btn-danger" 
-                                           onclick="return confirm('Are you sure you want to delete this seller? This action cannot be undone.');">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </a>
-                                    </div>
+            
+            <!-- Sellers Grid -->
+            <div class="row">
+                <?php while ($seller = $sellers->fetch_assoc()) { ?>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <h5 class="card-title"><?php echo htmlspecialchars($seller['seller_name']); ?></h5>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <p class="card-text">
+                                        <strong><i class="bi bi-telephone"></i> Phone:</strong> 
+                                        <?php echo htmlspecialchars($seller['phone_number']); ?>
+                                    </p>
+                                    
+                                    <p class="card-text">
+                                        <strong><i class="bi bi-geo-alt"></i> Address:</strong> 
+                                        <?php echo htmlspecialchars($seller['address']); ?>
+                                    </p>
+                                    
+                                    <small class="text-muted">
+                                        <i class="bi bi-calendar"></i> Seller ID: <?php echo $seller['seller_id']; ?>
+                                    </small>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <a href="edit_seller.php?seller_id=<?php echo $seller['seller_id']; ?>" class="btn-admin btn-edit">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <a href="delete_seller.php?seller_id=<?php echo $seller['seller_id']; ?>" 
+                                       class="btn-admin btn-delete" 
+                                       onclick="return confirm('Are you sure you want to delete this seller? This action cannot be undone.');">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
                                 </div>
                             </div>
-                        </div>
-                    <?php } ?>
-                <?php } else { ?>
-                    <div class="col-12">
-                        <div class="no-sellers">
-                            <i class="bi bi-people" style="font-size: 4rem; color: #ccc; margin-bottom: 20px;"></i>
-                            <h4>No Sellers Found</h4>
-                            <p>There are currently no registered sellers in the system.</p>
-                            <a href="add_seller.php" class="btn-admin">
-                                <i class="bi bi-person-plus"></i> Add First Seller
-                            </a>
                         </div>
                     </div>
                 <?php } ?>
             </div>
+            
+            <?php if ($sellers->num_rows == 0): ?>
+                <div class="text-center py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="bi bi-people" style="font-size: 3rem; color: #ccc;"></i>
+                            <h4 class="mt-3">No Sellers Found</h4>
+                            <p class="text-muted">No sellers have been added yet.</p>
+                        </div>
+                    </div>
+                </div>
+            <?php endif; ?>
 
         </div>
-    </main>
+    </div>
 
     <!-- Vendor JS Files -->
     <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

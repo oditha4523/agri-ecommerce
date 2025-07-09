@@ -182,14 +182,6 @@ include '../db/DBcon.php';
                                 <i class="bi bi-plus-circle"></i> Add New Product
                             </a>
                         </div>
-                        <div class="mt-3">
-                            <a href="view_products.php?category=Utilized" class="btn-admin btn-secondary">
-                                <i class="bi bi-filter"></i> View Utilized Products
-                            </a>
-                            <a href="view_products.php?category=UnderUtilized" class="btn-admin btn-secondary">
-                                <i class="bi bi-filter"></i> View UnderUtilized Fruits
-                            </a>
-                        </div>
                     </div>
                 </div>
                 
@@ -212,7 +204,7 @@ include '../db/DBcon.php';
             <!-- Quick Actions -->
             <div class="dashboard-card" data-aos="fade-up" data-aos-delay="300">
                 <h3><i class="bi bi-lightning"></i> Quick Actions</h3>
-                <div class="row">
+                <div class="row center">
                     <div class="col-md-3">
                         <a href="../shared/index.php" class="btn-admin w-100">
                             <i class="bi bi-house"></i> View Frontend
@@ -221,11 +213,6 @@ include '../db/DBcon.php';
                     <div class="col-md-3">
                         <a href="../shared/edit_profile.php" class="btn-admin btn-secondary w-100">
                             <i class="bi bi-person-gear"></i> Edit Profile
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <a href="view_products.php" class="btn-admin btn-secondary w-100">
-                            <i class="bi bi-graph-up"></i> View Reports
                         </a>
                     </div>
                     <div class="col-md-3">

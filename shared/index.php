@@ -188,10 +188,9 @@ include 'session_active.php';
             <span class="sitename">Agro Vista</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>74/1, </p>
-            <p>Kandy Rd, Matale</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>(081) 5 612 850</span></p>
-            <p><strong>Email:</strong> <span>Babycare@gmail.com</span></p>
+            <p>Faculty of Agricultural Sciences</p>
+            <p>Sabaragamuwa University of Sri Lanka</p>
+            <p class="mt-3"><strong>Email:</strong> <span>agribizdigitaltradefair@gmail.com</span></p>
           </div>
         </div>
 
