@@ -83,44 +83,47 @@ include 'session_active.php';
 
     <!-- Featured Services Section -->
     <section id="featured-services" class="featured-services section">
+       <div class="container section-title" data-aos="fade-up">
+        <h2>Our Products</h2>
+      </div>
 
       <div class="container">
 
         <div class="row gy-4">
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="service-item item-cyan position-relative">
-              <div class="icon">
-              <i class="bi bi-bell"></i>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="container1">
+              <img src="../assets/img/products/cinnomon.jpg" alt="Ceylon Cinnamon" class="image">
+              <div class="middle">
+                <div class="text">Ceylon Cinnamon</div>
               </div>
-              <h3>Dry Fish</h3>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="service-item item-orange position-relative">
-              <div class="icon">
-                <i class="bi bi-info-circle"></i>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="container1">
+              <img src="../assets/img/products/kithul.jpg" alt="Kithul Products" class="image">
+              <div class="middle">
+                <div class="text">Kithul Products</div>
               </div>
-              <h3>Cinnamon</h3>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item item-teal position-relative">
-              <div class="icon">
-              <i class="bi bi-chat-dots"></i>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="container1">
+              <img src="../assets/img/products/tea.jpg" alt="Handmade Tea" class="image">
+              <div class="middle">
+                <div class="text">Handmade Tea</div>
               </div>
-              <h3>Kithul</h3>
             </div>
           </div><!-- End Service Item -->
 
-          <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="service-item item-red position-relative">
-              <div class="icon">
-              <i class="bi bi-calendar-check"></i>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="container1">
+              <img src="../assets/img/products/dry_fish.jpg" alt="Dry Fish" class="image">
+              <div class="middle">
+                <div class="text">Dry Fish</div>
               </div>
-              <h3>Handmade Tea</h3>
             </div>
           </div><!-- End Service Item -->
         </div>
