@@ -78,49 +78,45 @@ include 'session_active.php';
 
       <div class="container">
 
-        <div class="row gy-5">
 
-          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
-            <div class="member-img">
-              <img src="../assets/img/team/team-1.jpg" class="img-fluid" alt="">
-              <div class="social">
-                <a href="https://github.com/Chamodcoder"><i class="bi bi-github"></i></a>
-                <a href="https://www.linkedin.com/in/chamod-chathuranga-091113327/"><i class="bi bi-linkedin"></i></a>
+
+        <div class="row gy-4">
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="container1">
+              <img src="../assets/img/products/cinnomon.jpg" alt="Ceylon Cinnamon" class="image">
+              <div class="middle">
+                <div class="text">Ceylon Cinnamon</div>
               </div>
             </div>
-            <div class="member-info text-center">
-              <h4>Chamod Chathuranga</h4>
-              <span>Team Member</span>
-            </div>
-          </div><!-- End Team Member -->
+          </div><!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
-            <div class="member-img">
-              <img src="../assets/img/team/team-2.jpg" class="img-fluid" alt="">
-              <div class="social">
-                <a href="https://github.com/KavinduAluthwaththa"><i class="bi bi-github"></i></a>
-                <a href="linkedin.com/in/cloud-walk3r/"><i class="bi bi-linkedin"></i></a>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="container1">
+              <img src="../assets/img/products/kithul.jpg" alt="Kithul Products" class="image">
+              <div class="middle">
+                <div class="text">Kithul Products</div>
               </div>
             </div>
-            <div class="member-info text-center">
-              <h4>Kavindu Aluthwaththa</h4>
-              <span>Team Member</span>
-            </div>
-          </div><!-- End Team Member -->
+          </div><!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
-            <div class="member-img">
-              <img src="../assets/img/team/team-3.jpg" class="img-fluid" alt="">
-              <div class="social">
-                <a href="https://github.com/Mariettrodrigo"><i class="bi bi-github"></i></a>
-                <a href="https://www.linkedin.com/in/mariyeta-rodrigo-38a49b299?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="bi bi-linkedin"></i></a>
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="container1">
+              <img src="../assets/img/products/tea.jpg" alt="Handmade Tea" class="image">
+              <div class="middle">
+                <div class="text">Handmade Tea</div>
               </div>
             </div>
-            <div class="member-info text-center">
-              <h4>Mariyeta Rodrigo</h4>
-              <span>Team Member</span>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="container1">
+              <img src="../assets/img/products/dry_fish.jpg" alt="Dry Fish" class="image">
+              <div class="middle">
+                <div class="text">Dry Fish</div>
+              </div>
             </div>
-          </div><!-- End Team Member -->
+          </div><!-- End Service Item -->
         </div>
 
       </div>
