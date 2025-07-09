@@ -25,13 +25,10 @@ $sellers_result = $conn->query($sellers_query);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $category = mysqli_real_escape_string($conn, $_POST['category']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $price = mysqli_real_escape_string($conn, $_POST['price']);
-    $amount = mysqli_real_escape_string($conn, $_POST['amount']);
+    $video_url = mysqli_real_escape_string($conn, $_POST['video_url']);
     $seller_id = mysqli_real_escape_string($conn, $_POST['seller_id']);
 
-    // Handle image upload if new image is provided
-    $image_path = $product['image_path']; // Keep existing image by default
+    // Handle image upload if new image is provided (keeping for future use)
     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
         $upload_dir = '../assets/img/products/';
         
@@ -45,12 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_path = $upload_dir . $file_name;
         
         if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_path)) {
-            $image_path = 'assets/img/products/' . $file_name;
+            // Image uploaded successfully
         }
     }
 
     // Update product details
-    $sql = "UPDATE products SET name='$name', category='$category', description='$description', price='$price', amount='$amount', seller_id='$seller_id', image_path='$image_path' WHERE product_id=$product_id";
+    $sql = "UPDATE products SET name='$name', category='$category', video_url='$video_url', seller_id='$seller_id' WHERE product_id=$product_id";
 
     if ($conn->query($sql) === TRUE) {
         header("Location: view_products.php?success=product_updated");
@@ -67,13 +64,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Product | Agri E-Commerce</title>
+    <title>Edit Product | Agro Vista Admin</title>
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="../assets/fonts/material-icon/css/material-design-iconic-font.min.css">
 
     <!-- Main css -->
     <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        .category-info {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #6c757d;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
 
@@ -106,32 +123,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <label for="category"><i class="zmdi zmdi-bookmark"></i></label>
                                 <select name="category" id="category" required>
                                     <option value="">Select Category</option>
-                                    <option value="Seeds" <?php echo ($product['category'] == 'Seeds') ? 'selected' : ''; ?>>Seeds</option>
-                                    <option value="Fertilizers" <?php echo ($product['category'] == 'Fertilizers') ? 'selected' : ''; ?>>Fertilizers</option>
-                                    <option value="Tools" <?php echo ($product['category'] == 'Tools') ? 'selected' : ''; ?>>Tools</option>
-                                    <option value="Pesticides" <?php echo ($product['category'] == 'Pesticides') ? 'selected' : ''; ?>>Pesticides</option>
-                                    <option value="Equipment" <?php echo ($product['category'] == 'Equipment') ? 'selected' : ''; ?>>Equipment</option>
-                                    <option value="Other" <?php echo ($product['category'] == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                    <option value="Utilized" <?php echo ($product['category'] == 'Utilized') ? 'selected' : ''; ?>>Utilized Products</option>
+                                    <option value="UnderUtilized" <?php echo ($product['category'] == 'UnderUtilized') ? 'selected' : ''; ?>>UnderUtilized Fruits</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="description"><i class="zmdi zmdi-comment-text"></i></label>
-                                <input name="description" id="description" placeholder="Product Description" value="<?php echo htmlspecialchars($product['description']); ?>" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="price"><i class="zmdi zmdi-money"></i></label>
-                                <input type="number" name="price" id="price" placeholder="Price" step="0.01" min="0" value="<?php echo $product['price']; ?>" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="amount"><i class="zmdi zmdi-collection-item"></i></label>
-                                <input type="number" name="amount" id="amount" placeholder="Quantity Available" min="1" value="<?php echo $product['amount']; ?>" required />
+                                <label for="video_url"><i class="zmdi zmdi-videocam"></i></label>
+                                <input type="url" name="video_url" id="video_url" placeholder="Video URL (optional)" value="<?php echo htmlspecialchars($product['video_url'] ?? ''); ?>" />
                             </div>
                             <div class="form-group">
                                 <label for="product_image"><i class="zmdi zmdi-image"></i></label>
                                 <input type="file" name="product_image" id="product_image" accept="image/*" />
-                                <?php if (!empty($product['image_path'])) { ?>
-                                    <small style="color: #666; font-size: 12px; margin-top: 5px; display: block;">Current image: <?php echo basename($product['image_path']); ?></small>
-                                <?php } ?>
+                                <small style="color: #666; font-size: 12px; margin-top: 5px; display: block;">Image upload is optional. Default images are used for display.</small>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="edit_product" id="edit_product" class="form-submit" value="Save Changes"/>

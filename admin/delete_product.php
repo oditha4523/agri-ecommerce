@@ -9,19 +9,16 @@ include '../db/DBcon.php';
 if (isset($_GET['product_id'])) {
     $product_id = $_GET['product_id'];
     
-    $check = $conn->query("SELECT * FROM Products WHERE product_id = $product_id");
+    $check = $conn->query("SELECT * FROM products WHERE product_id = $product_id");
 
     if ($check->num_rows > 0) {
-        // Delete vaccination records first (to maintain referential integrity)
-        $conn->query("DELETE FROM Orders WHERE product_id = $product_id");
+        // Delete the product
+        $conn->query("DELETE FROM products WHERE product_id = $product_id");
 
-        // Now delete the child
-        $conn->query("DELETE FROM Products WHERE product_id = $product_id");
-
-        header("Location: view_products.php?success=Product_deleted");
+        header("Location: view_products.php?success=product_deleted");
         exit;
     } else {
-        echo "Error: Unauthorized action!";
+        echo "Error: Product not found!";
     }
 } else {
     echo "Error: Invalid request!";

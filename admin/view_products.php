@@ -8,13 +8,23 @@ include '../db/DBcon.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Get products with seller information
-$products = $conn->query("
+// Get filter parameter
+$category_filter = isset($_GET['category']) ? $_GET['category'] : '';
+
+// Build query based on filter
+$query = "
     SELECT p.*, s.seller_name 
     FROM products p 
     LEFT JOIN sellers s ON p.seller_id = s.seller_id 
-    WHERE p.availability = '1'
-");
+";
+
+if ($category_filter) {
+    $query .= " WHERE p.category = '" . mysqli_real_escape_string($conn, $category_filter) . "'";
+}
+
+$query .= " ORDER BY p.product_id DESC";
+
+$products = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -29,15 +39,29 @@ $products = $conn->query("
     <div class="dashboard-container">
         <div class="dashboard-section">
             <h3>Posted Products</h3>
+            
+            <!-- Filter Section -->
+            <div class="filter-section" style="margin-bottom: 20px;">
+                <form method="GET" style="display: inline-block;">
+                    <select name="category" onchange="this.form.submit()" style="padding: 8px; margin-right: 10px;">
+                        <option value="">All Categories</option>
+                        <option value="Utilized" <?php echo ($category_filter == 'Utilized') ? 'selected' : ''; ?>>Utilized Products</option>
+                        <option value="UnderUtilized" <?php echo ($category_filter == 'UnderUtilized') ? 'selected' : ''; ?>>UnderUtilized Fruits</option>
+                    </select>
+                </form>
+                <a href="add_product.php" class="add-child-button" style="margin-left: 10px;">Add New Product</a>
+            </div>
+            
             <div class="card-container">
                 <?php while ($product = $products->fetch_assoc()) { ?>
                     <div class="card">
                         <div class="card-content">
                             <div class="product-details">
                                 <h4><?php echo htmlspecialchars($product['name']); ?></h4>
-                                <p><strong>Price:</strong> $<?php echo number_format($product['price'], 2); ?></p>
-                                <p><strong>Amount:</strong> <?php echo $product['amount']; ?> units</p>
                                 <p><strong>Category:</strong> <?php echo htmlspecialchars($product['category']); ?></p>
+                                <?php if (!empty($product['video_url'])): ?>
+                                    <p><strong>Video:</strong> <a href="<?php echo htmlspecialchars($product['video_url']); ?>" target="_blank">Watch Video</a></p>
+                                <?php endif; ?>
                                 <div class="seller-info">
                                     <strong>Seller:</strong> <?php echo htmlspecialchars($product['seller_name'] ?? 'Unknown'); ?>
                                 </div>
