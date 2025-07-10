@@ -135,6 +135,20 @@ $result = $conn->query($sql);
       font-size: 48px;
       color: white;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+    
+    .video-overlay .play-btn::after {
+      content: "Auto-play";
+      position: absolute;
+      bottom: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px;
+      background: rgba(76, 175, 80, 0.9);
+      padding: 3px 8px;
+      border-radius: 10px;
+      white-space: nowrap;
     }
     
     .video-modal {
@@ -165,6 +179,32 @@ $result = $conn->query($sql);
       width: 100%;
       height: 450px;
       border: none;
+      border-radius: 10px;
+    }
+    
+    .video-modal video {
+      background: #000;
+    }
+    
+    .video-autoplay-indicator {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(76, 175, 80, 0.9);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 500;
+      z-index: 1000;
+      animation: fadeInOut 3s ease-in-out;
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
     }
     
     .video-close {
@@ -335,6 +375,9 @@ $result = $conn->query($sql);
             <div id="<?php echo $product_id; ?>_modal" class="video-modal">
               <div class="video-modal-content">
                 <span class="video-close" onclick="closeVideoModal('<?php echo $product_id; ?>')">&times;</span>
+                <div id="<?php echo $product_id; ?>_autoplay_indicator" class="video-autoplay-indicator" style="display: none;">
+                  <i class="bi bi-play-fill"></i> Auto-playing...
+                </div>
                 <?php if ($video_type === 'youtube'): ?>
                   <iframe id="<?php echo $product_id; ?>_iframe" src="" 
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -346,7 +389,7 @@ $result = $conn->query($sql);
                           allowfullscreen
                           data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1&muted=1"></iframe>
                 <?php elseif ($video_type === 'direct'): ?>
-                  <video id="<?php echo $product_id; ?>_video" controls muted preload="metadata">
+                  <video id="<?php echo $product_id; ?>_video" controls muted autoplay playsinline preload="metadata">
                     <source src="<?php echo htmlspecialchars($video_url); ?>" type="video/<?php echo pathinfo($video_url, PATHINFO_EXTENSION); ?>">
                     Your browser does not support the video tag.
                   </video>
@@ -450,6 +493,9 @@ $result = $conn->query($sql);
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
         
+        // Get autoplay indicator
+        var indicator = document.getElementById(productId + '_autoplay_indicator');
+        
         // Load and autoplay video
         var iframe = modal.querySelector('iframe');
         var video = modal.querySelector('video');
@@ -457,20 +503,50 @@ $result = $conn->query($sql);
         if (iframe && iframe.hasAttribute('data-src')) {
           // Load iframe source to trigger autoplay
           iframe.src = iframe.getAttribute('data-src');
+          
+          // Show autoplay indicator for iframe videos
+          if (indicator) {
+            indicator.style.display = 'block';
+            setTimeout(function() {
+              indicator.style.display = 'none';
+            }, 3000);
+          }
         }
         
         if (video) {
-          // For direct video files, start playing
+          // For direct video files, ensure autoplay
           video.currentTime = 0;
+          video.muted = true; // Ensure muted for autoplay policy compliance
+          
+          // Try to play the video
           var playPromise = video.play();
           
           // Handle play promise for browsers that require it
           if (playPromise !== undefined) {
             playPromise.then(function() {
-              // Video started successfully
+              // Video started successfully - show indicator
+              console.log('Video autoplay started');
+              if (indicator) {
+                indicator.style.display = 'block';
+                setTimeout(function() {
+                  indicator.style.display = 'none';
+                }, 3000);
+              }
             }).catch(function(error) {
-              // Auto-play was prevented, user needs to interact
-              console.log('Autoplay prevented:', error);
+              // Auto-play was prevented
+              console.log('Autoplay prevented, will unmute after user clicks:', error);
+              
+              // Add click listener to unmute when user interacts
+              video.addEventListener('click', function() {
+                video.muted = false;
+                if (indicator) {
+                  indicator.innerHTML = '<i class="bi bi-volume-up-fill"></i> Unmuted';
+                  indicator.style.display = 'block';
+                  setTimeout(function() {
+                    indicator.style.display = 'none';
+                  }, 2000);
+                }
+              }, { once: true });
             });
           }
         }
@@ -482,6 +558,12 @@ $result = $conn->query($sql);
       if (modal) {
         modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Restore scrolling
+        
+        // Hide autoplay indicator
+        var indicator = document.getElementById(productId + '_autoplay_indicator');
+        if (indicator) {
+          indicator.style.display = 'none';
+        }
         
         // Stop video playback
         var iframe = modal.querySelector('iframe');
