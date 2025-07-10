@@ -70,6 +70,7 @@ $result = $conn->query($sql);
       font-size: 24px;
       color: #dc3545;
       transition: color 0.3s ease;
+      cursor: pointer;
     }
     
     .social .bi-play-circle-fill:hover {
@@ -92,10 +93,95 @@ $result = $conn->query($sql);
       margin-bottom: 20px;
     }
     
+    .member-img {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    
     .member-img img {
       height: 250px;
       object-fit: cover;
       border-radius: 10px;
+      width: 100%;
+    }
+    
+    .member-img video {
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      width: 100%;
+    }
+    
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    
+    .video-overlay:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .video-overlay .play-btn {
+      font-size: 48px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .video-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+    
+    .video-modal-content {
+      background-color: #000;
+      margin: 5% auto;
+      padding: 0;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .video-modal video,
+    .video-modal iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+    }
+    
+    .video-close {
+      color: #aaa;
+      position: absolute;
+      top: -40px;
+      right: 0;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10000;
+    }
+    
+    .video-close:hover,
+    .video-close:focus {
+      color: white;
+      text-decoration: none;
     }
     
     .member-info h4 {
@@ -145,14 +231,13 @@ $result = $conn->query($sql);
           <li><a href="ufruits.php">Underutilized Fruits</a></li>
           <li><a href="contact.php">Contact</a></li>
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list">          
+        </i>
       </nav>
-
     </div>
   </header>
 
   <main class="main">
-
     <!-- Page Title -->
     <div class="page-title dark-background">
       <div class="container position-relative">
@@ -187,19 +272,46 @@ $result = $conn->query($sql);
                   $display_image = "../assets/img/products/" . $default_images[$image_index % count($default_images)];
                   $image_index++;
                   
-                  // If there's a video URL, we could show a video thumbnail or play button
+                  // Get video URL and determine video type
                   $video_url = $row['video_url'];
+                  $video_id = '';
+                  $video_type = '';
+                  
+                  if (!empty($video_url)) {
+                      // Check if it's a YouTube video
+                      if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $video_url, $matches)) {
+                          $video_id = $matches[1];
+                          $video_type = 'youtube';
+                      }
+                      // Check if it's a Vimeo video
+                      elseif (preg_match('/vimeo\.com\/(\d+)/', $video_url, $matches)) {
+                          $video_id = $matches[1];
+                          $video_type = 'vimeo';
+                      }
+                      // Check if it's a direct video file
+                      elseif (preg_match('/\.(mp4|webm|ogg)$/i', $video_url)) {
+                          $video_type = 'direct';
+                      }
+                  }
+                  
+                  $product_id = 'product_' . $row['product_id'];
           ?>
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
             <div class="member-img">
-              <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
+              <?php if (!empty($video_url)): ?>
+                <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                <div class="video-overlay" onclick="openVideoModal('<?php echo $product_id; ?>')">
+                  <i class="bi bi-play-circle-fill play-btn"></i>
+                </div>
+              <?php else: ?>
+                <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
+              <?php endif; ?>
               <div class="social">
                 <?php if(!empty($video_url)): ?>
-                  <a href="<?php echo htmlspecialchars($video_url); ?>" target="_blank" title="Watch Video">
-                    <i class="bi bi-play-circle-fill"></i>
-                  </a>
+                  <span class="product-category-badge">Has Video</span>
+                <?php else: ?>
+                  <span class="product-category-badge"><?php echo htmlspecialchars($page_title); ?></span>
                 <?php endif; ?>
-                <span class="product-category-badge"><?php echo htmlspecialchars($page_title); ?></span>
               </div>
             </div>
             <div class="member-info text-center">
@@ -207,12 +319,37 @@ $result = $conn->query($sql);
               <span>Seller: <?php echo htmlspecialchars($row['seller_name']); ?></span>
               <?php if(!empty($video_url)): ?>
                 <div class="product-actions mt-3">
-                  <a href="<?php echo htmlspecialchars($video_url); ?>" target="_blank" class="btn btn-primary btn-sm">
+                  <button onclick="openVideoModal('<?php echo $product_id; ?>')" class="btn btn-primary btn-sm">
                     <i class="bi bi-play-circle"></i> Watch Video
-                  </a>
+                  </button>
                 </div>
               <?php endif; ?>
             </div>
+            
+            <?php if (!empty($video_url)): ?>
+            <!-- Video Modal -->
+            <div id="<?php echo $product_id; ?>_modal" class="video-modal">
+              <div class="video-modal-content">
+                <span class="video-close" onclick="closeVideoModal('<?php echo $product_id; ?>')">&times;</span>
+                <?php if ($video_type === 'youtube'): ?>
+                  <iframe src="https://www.youtube.com/embed/<?php echo $video_id; ?>?autoplay=1" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowfullscreen></iframe>
+                <?php elseif ($video_type === 'vimeo'): ?>
+                  <iframe src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1" 
+                          allow="autoplay; fullscreen; picture-in-picture" 
+                          allowfullscreen></iframe>
+                <?php elseif ($video_type === 'direct'): ?>
+                  <video controls autoplay>
+                    <source src="<?php echo htmlspecialchars($video_url); ?>" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                <?php else: ?>
+                  <iframe src="<?php echo htmlspecialchars($video_url); ?>" allowfullscreen></iframe>
+                <?php endif; ?>
+              </div>
+            </div>
+            <?php endif; ?>
           </div><!-- End Product -->
           <?php
               }
@@ -297,6 +434,64 @@ $result = $conn->query($sql);
 
   <!-- Main JS File -->
   <script src="../assets/js/main.js"></script>
+
+  <!-- Video Modal JavaScript -->
+  <script>
+    function openVideoModal(productId) {
+      var modal = document.getElementById(productId + '_modal');
+      if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      }
+    }
+
+    function closeVideoModal(productId) {
+      var modal = document.getElementById(productId + '_modal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+        
+        // Stop video playback by reloading the iframe/video element
+        var iframe = modal.querySelector('iframe');
+        var video = modal.querySelector('video');
+        
+        if (iframe) {
+          var src = iframe.src;
+          iframe.src = '';
+          iframe.src = src;
+        }
+        
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      var modals = document.getElementsByClassName('video-modal');
+      for (var i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+          var modalId = modals[i].id.replace('_modal', '');
+          closeVideoModal(modalId);
+        }
+      }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        var modals = document.getElementsByClassName('video-modal');
+        for (var i = 0; i < modals.length; i++) {
+          if (modals[i].style.display === 'block') {
+            var modalId = modals[i].id.replace('_modal', '');
+            closeVideoModal(modalId);
+          }
+        }
+      }
+    });
+  </script>
 
 </body>
 
