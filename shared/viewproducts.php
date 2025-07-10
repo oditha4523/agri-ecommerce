@@ -332,20 +332,23 @@ $result = $conn->query($sql);
               <div class="video-modal-content">
                 <span class="video-close" onclick="closeVideoModal('<?php echo $product_id; ?>')">&times;</span>
                 <?php if ($video_type === 'youtube'): ?>
-                  <iframe src="https://www.youtube.com/embed/<?php echo $video_id; ?>?autoplay=1" 
+                  <iframe id="<?php echo $product_id; ?>_iframe" src="" 
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                          allowfullscreen></iframe>
+                          allowfullscreen
+                          data-src="https://www.youtube.com/embed/<?php echo $video_id; ?>?autoplay=1&mute=1"></iframe>
                 <?php elseif ($video_type === 'vimeo'): ?>
-                  <iframe src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1" 
+                  <iframe id="<?php echo $product_id; ?>_iframe" src="" 
                           allow="autoplay; fullscreen; picture-in-picture" 
-                          allowfullscreen></iframe>
+                          allowfullscreen
+                          data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1&muted=1"></iframe>
                 <?php elseif ($video_type === 'direct'): ?>
-                  <video controls autoplay>
+                  <video id="<?php echo $product_id; ?>_video" controls muted preload="metadata">
                     <source src="<?php echo htmlspecialchars($video_url); ?>" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
                 <?php else: ?>
-                  <iframe src="<?php echo htmlspecialchars($video_url); ?>" allowfullscreen></iframe>
+                  <iframe id="<?php echo $product_id; ?>_iframe" src="" allowfullscreen
+                          data-src="<?php echo htmlspecialchars($video_url); ?>"></iframe>
                 <?php endif; ?>
               </div>
             </div>
@@ -442,6 +445,31 @@ $result = $conn->query($sql);
       if (modal) {
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        
+        // Load and autoplay video
+        var iframe = modal.querySelector('iframe');
+        var video = modal.querySelector('video');
+        
+        if (iframe && iframe.hasAttribute('data-src')) {
+          // Load iframe source to trigger autoplay
+          iframe.src = iframe.getAttribute('data-src');
+        }
+        
+        if (video) {
+          // For direct video files, start playing
+          video.currentTime = 0;
+          var playPromise = video.play();
+          
+          // Handle play promise for browsers that require it
+          if (playPromise !== undefined) {
+            playPromise.then(function() {
+              // Video started successfully
+            }).catch(function(error) {
+              // Auto-play was prevented, user needs to interact
+              console.log('Autoplay prevented:', error);
+            });
+          }
+        }
       }
     }
 
@@ -451,14 +479,13 @@ $result = $conn->query($sql);
         modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Restore scrolling
         
-        // Stop video playback by reloading the iframe/video element
+        // Stop video playback
         var iframe = modal.querySelector('iframe');
         var video = modal.querySelector('video');
         
         if (iframe) {
-          var src = iframe.src;
+          // Clear iframe source to stop playback
           iframe.src = '';
-          iframe.src = src;
         }
         
         if (video) {
@@ -489,6 +516,20 @@ $result = $conn->query($sql);
             closeVideoModal(modalId);
           }
         }
+      }
+    });
+
+    // Handle browser autoplay policies
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if autoplay is supported
+      var testVideo = document.createElement('video');
+      testVideo.muted = true;
+      testVideo.setAttribute('autoplay', '');
+      testVideo.setAttribute('playsinline', '');
+      
+      // If autoplay with muted video doesn't work, we'll need user interaction
+      if (!testVideo.autoplay) {
+        console.log('Autoplay may be restricted in this browser');
       }
     });
   </script>
