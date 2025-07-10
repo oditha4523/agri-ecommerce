@@ -155,114 +155,6 @@ include '../db/DBcon.php';
 .gallery .imgWrap:not(:hover) {
   flex-grow: 0.8;
 }
-.gallery .imgWrap .img-label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  cursor: pointer;
-}
-.gallery .imgWrap .img-label img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  object-fit: cover;
-  transform: translateX(-50%) translateY(-50%);
-}
-.gallery .full-toggle:checked + .imgWrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 5;
-  transform: none;
-  animation: zoomIn 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-}
-@keyframes zoomIn {
-  from {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-.gallery .full-toggle:checked + .imgWrap .caption {
-  bottom: 0;
-}
-.gallery .close {
-  display: none;
-  position: fixed;
-  right: 1rem;
-  top: 50%;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  text-align: center;
-  background-color: #18514a;
-  color: #fff;
-  cursor: pointer;
-  z-index: 9;
-  transition: opacity 0.75s ease, background-color 0.3s ease;
-  transform: translateY(-50%);
-  opacity: 0;
-  border-radius: 50%;
-}
-.gallery .full-toggle[id="img1-full"]:checked ~ .close[for="img1-full"],
-.gallery .full-toggle[id="img2-full"]:checked ~ .close[for="img2-full"],
-.gallery .full-toggle[id="img3-full"]:checked ~ .close[for="img3-full"],
-.gallery .full-toggle[id="img4-full"]:checked ~ .close[for="img4-full"],
-.gallery .full-toggle[id="img5-full"]:checked ~ .close[for="img5-full"] {
-  display: block;
-  opacity: 1;
-}
-.gallery .close:hover {
-  background-color: #d64b31;
-}
-.gallery .full-toggle:checked ~ .imgWrap:not(:checked + .imgWrap) {
-  width: 0;
-  opacity: 0;
-}
-.gallery .full-toggle:checked::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: 999;
-  transition: background 0.75s ease-in-out;
-  animation: fadeIn 0.75s ease-in-out forwards;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.gallery .full-toggle:not(:checked) + .imgWrap.fullscreen-exit {
-  animation: zoomOut 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-}
-@keyframes zoomOut {
-  from {
-    transform: scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: scale(0.9);
-    opacity: 0;
-  }
-}
 
   </style>
 </head>
@@ -310,36 +202,28 @@ include '../db/DBcon.php';
 
     <div class="container-fluid">
   <div class="row gallery" id="gallery">
-    <input type="checkbox" id="img1-full" class="full-toggle" hidden>
-    <div class="imgWrap imgWrap1" style="background-image: url(../assets/img/products/cinnomon.jpg);">
-      <label for="img1-full" class="img-label"></label>
+    <div class="imgWrap imgWrap1" style="background-image: url(../assets/img/products/cinnomon.jpg);" onclick="window.location.href='viewproducts.php?category=cinnamon'">
       <div class="caption">
-        <h3>CINNOMON</h3>
-        <span>BUY NOW</span>
+        <h3>CINNAMON</h3>
+        <span>VIEW PRODUCTS</span>
       </div>
     </div>
-    <input type="checkbox" id="img2-full" class="full-toggle" hidden>
-    <div class="imgWrap imgWrap2" style="background-image: url(../assets/img/products/kithul.jpg);">
-      <label for="img2-full" class="img-label"></label>
+    <div class="imgWrap imgWrap2" style="background-image: url(../assets/img/products/kithul.jpg);" onclick="window.location.href='viewproducts.php?category=kithul'">
       <div class="caption">
         <h3>KITHUL</h3>
-        <span>BUY NOW</span>
+        <span>VIEW PRODUCTS</span>
       </div>
     </div>
-    <input type="checkbox" id="img3-full" class="full-toggle" hidden>
-    <div class="imgWrap imgWrap3" style="background-image: url(../assets/img/products/tea.jpg);">
-      <label for="img3-full" class="img-label"></label>
+    <div class="imgWrap imgWrap3" style="background-image: url(../assets/img/products/tea.jpg);" onclick="window.location.href='viewproducts.php?category=tea'">
       <div class="caption">
         <h3>HANDMADE TEA</h3>
-        <span>BUY NOW</span>
+        <span>VIEW PRODUCTS</span>
       </div>
     </div>
-    <input type="checkbox" id="img4-full" class="full-toggle" hidden>
-    <div class="imgWrap imgWrap4" style="background-image: url(../assets/img/products/dry_fish.jpg);">
-      <label for="img4-full" class="img-label"></label>
+    <div class="imgWrap imgWrap4" style="background-image: url(../assets/img/products/dry_fish.jpg);" onclick="window.location.href='viewproducts.php?category=dry_fish'">
       <div class="caption">
         <h3>DRY FISH</h3>
-        <span>BUY NOW</span>
+        <span>VIEW PRODUCTS</span>
       </div>
     </div>
     

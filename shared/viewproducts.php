@@ -175,20 +175,6 @@ $result = $conn->query($sql);
     <section id="products" class="team section">
 
       <div class="container">
-        
-        <!-- Back Button -->
-        <div class="back-button">
-          <a href="products.php" class="btn btn-outline-primary">
-            <i class="bi bi-arrow-left"></i> Back to Products
-          </a>
-        </div>
-
-        <!-- Category Header -->
-        <div class="category-header">
-          <h2><?php echo htmlspecialchars($page_title); ?></h2>
-          <p>Authentic products sourced directly from local farmers and producers</p>
-        </div>
-
         <div class="row gy-5">
 
           <?php
@@ -236,9 +222,6 @@ $result = $conn->query($sql);
             <div class="no-products">
               <h3>No Products Available</h3>
               <p>We're currently updating our inventory. Please check back soon for new <?php echo htmlspecialchars($page_title); ?> products!</p>
-              <a href="products.php" class="btn btn-primary mt-3">
-                <i class="bi bi-arrow-left"></i> Back to All Products
-              </a>
             </div>
           </div>
           <?php } ?>
