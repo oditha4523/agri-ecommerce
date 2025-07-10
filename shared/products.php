@@ -100,6 +100,170 @@ include '../db/DBcon.php';
       padding: 16px 32px;
       border-radius: 5px;
     }
+
+    .gallery {
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+.gallery .imgWrap {
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  transition: all 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+.gallery .imgWrap:last-child {
+  min-width: 1px;
+}
+.gallery .imgWrap .caption {
+  position: absolute;
+  left: 0;
+  bottom: -100%;
+  background-color: rgba(24, 81, 74, 0.75);
+  border-top: 3px solid #d64b31;
+  padding: 20px 10%;
+  color: #fff;
+  width: 100%;
+  transition: bottom 0.75s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: bottom;
+  z-index: 2;
+}
+.gallery .imgWrap:hover .caption {
+  bottom: 0;
+}
+.gallery .imgWrap .caption h3 {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  text-transform: uppercase;
+  margin-bottom: 0;
+  color: #fff;
+}
+.gallery .imgWrap .caption span {
+  font-size: 75%;
+}
+.gallery .imgWrap:hover {
+  flex-grow: 2.25;
+}
+.gallery .imgWrap:not(:hover) {
+  flex-grow: 0.8;
+}
+.gallery .imgWrap .img-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
+}
+.gallery .imgWrap .img-label img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  object-fit: cover;
+  transform: translateX(-50%) translateY(-50%);
+}
+.gallery .full-toggle:checked + .imgWrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 5;
+  transform: none;
+  animation: zoomIn 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.gallery .full-toggle:checked + .imgWrap .caption {
+  bottom: 0;
+}
+.gallery .close {
+  display: none;
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #18514a;
+  color: #fff;
+  cursor: pointer;
+  z-index: 9;
+  transition: opacity 0.75s ease, background-color 0.3s ease;
+  transform: translateY(-50%);
+  opacity: 0;
+  border-radius: 50%;
+}
+.gallery .full-toggle[id="img1-full"]:checked ~ .close[for="img1-full"],
+.gallery .full-toggle[id="img2-full"]:checked ~ .close[for="img2-full"],
+.gallery .full-toggle[id="img3-full"]:checked ~ .close[for="img3-full"],
+.gallery .full-toggle[id="img4-full"]:checked ~ .close[for="img4-full"],
+.gallery .full-toggle[id="img5-full"]:checked ~ .close[for="img5-full"] {
+  display: block;
+  opacity: 1;
+}
+.gallery .close:hover {
+  background-color: #d64b31;
+}
+.gallery .full-toggle:checked ~ .imgWrap:not(:checked + .imgWrap) {
+  width: 0;
+  opacity: 0;
+}
+.gallery .full-toggle:checked::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  transition: background 0.75s ease-in-out;
+  animation: fadeIn 0.75s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.gallery .full-toggle:not(:checked) + .imgWrap.fullscreen-exit {
+  animation: zoomOut 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 
@@ -144,64 +308,44 @@ include '../db/DBcon.php';
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Team Section -->
-    <section id="team" class="team section">
-
-      <div class="container">
-
-
-
-        <div class="row gy-4">
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
-            <a href="viewproducts.php?category=cinnamon" class="product-link">
-              <div class="container1">
-                <img src="../assets/img/products/cinnomon.jpg" alt="Ceylon Cinnamon" class="image">
-                <div class="middle">
-                  <div class="text">Ceylon Cinnamon</div>
-                </div>
-              </div>
-            </a>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
-            <a href="viewproducts.php?category=kithul" class="product-link">
-              <div class="container1">
-                <img src="../assets/img/products/kithul.jpg" alt="Kithul Products" class="image">
-                <div class="middle">
-                  <div class="text">Kithul Products</div>
-                </div>
-              </div>
-            </a>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
-            <a href="viewproducts.php?category=tea" class="product-link">
-              <div class="container1">
-                <img src="../assets/img/products/tea.jpg" alt="Handmade Tea" class="image">
-                <div class="middle">
-                  <div class="text">Handmade Tea</div>
-                </div>
-              </div>
-            </a>
-          </div><!-- End Service Item -->
-
-          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
-            <a href="viewproducts.php?category=dry_fish" class="product-link">
-              <div class="container1">
-                <img src="../assets/img/products/dry_fish.jpg" alt="Dry Fish" class="image">
-                <div class="middle">
-                  <div class="text">Dry Fish</div>
-                </div>
-              </div>
-            </a>
-          </div><!-- End Service Item -->
-        </div>
-
+    <div class="container-fluid">
+  <div class="row gallery" id="gallery">
+    <input type="checkbox" id="img1-full" class="full-toggle" hidden>
+    <div class="imgWrap imgWrap1" style="background-image: url(../assets/img/products/cinnomon.jpg);">
+      <label for="img1-full" class="img-label"></label>
+      <div class="caption">
+        <h3>CINNOMON</h3>
+        <span>BUY NOW</span>
       </div>
-
-    </section><!-- /Team Section -->
-
+    </div>
+    <input type="checkbox" id="img2-full" class="full-toggle" hidden>
+    <div class="imgWrap imgWrap2" style="background-image: url(../assets/img/products/kithul.jpg);">
+      <label for="img2-full" class="img-label"></label>
+      <div class="caption">
+        <h3>KITHUL</h3>
+        <span>BUY NOW</span>
+      </div>
+    </div>
+    <input type="checkbox" id="img3-full" class="full-toggle" hidden>
+    <div class="imgWrap imgWrap3" style="background-image: url(../assets/img/products/tea.jpg);">
+      <label for="img3-full" class="img-label"></label>
+      <div class="caption">
+        <h3>HANDMADE TEA</h3>
+        <span>BUY NOW</span>
+      </div>
+    </div>
+    <input type="checkbox" id="img4-full" class="full-toggle" hidden>
+    <div class="imgWrap imgWrap4" style="background-image: url(../assets/img/products/dry_fish.jpg);">
+      <label for="img4-full" class="img-label"></label>
+      <div class="caption">
+        <h3>DRY FISH</h3>
+        <span>BUY NOW</span>
+      </div>
+    </div>
+    
+    
+</div>
+   
   </main>
 
   <footer id="footer" class="footer dark-background">
