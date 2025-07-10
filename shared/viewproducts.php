@@ -331,6 +331,10 @@ $result = $conn->query($sql);
                       // Check if it's a local video file or direct video file
                       elseif (preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $video_url)) {
                           $video_type = 'direct';
+                          // Adjust path for local video files (add ../ since we're in shared/ directory)
+                          if (strpos($video_url, 'assets/') === 0) {
+                              $video_url = '../' . $video_url;
+                          }
                       }
                       // Default to iframe for other URLs
                       else {
@@ -339,6 +343,11 @@ $result = $conn->query($sql);
                   }
                   
                   $product_id = 'product_' . $row['product_id'];
+                  
+                  // Debug: Add HTML comment to show video info (remove in production)
+                  if (!empty($video_url)) {
+                      echo "<!-- Debug: Video URL: " . htmlspecialchars($video_url) . ", Type: " . htmlspecialchars($video_type) . " -->";
+                  }
           ?>
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
             <div class="member-img">
@@ -389,9 +398,12 @@ $result = $conn->query($sql);
                           allowfullscreen
                           data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1&muted=1"></iframe>
                 <?php elseif ($video_type === 'direct'): ?>
-                  <video id="<?php echo $product_id; ?>_video" controls muted autoplay playsinline preload="metadata">
-                    <source src="<?php echo htmlspecialchars($video_url); ?>" type="video/<?php echo pathinfo($video_url, PATHINFO_EXTENSION); ?>">
-                    Your browser does not support the video tag.
+                  <video id="<?php echo $product_id; ?>_video" controls muted autoplay playsinline preload="metadata" 
+                         onerror="console.error('Video failed to load:', this.src)">
+                    <source src="<?php echo htmlspecialchars($video_url); ?>" 
+                            type="video/<?php echo pathinfo($video_url, PATHINFO_EXTENSION); ?>"
+                            onerror="console.error('Video source failed to load:', this.src)">
+                    <p>Your browser does not support the video tag. Video URL: <?php echo htmlspecialchars($video_url); ?></p>
                   </video>
                 <?php else: ?>
                   <iframe id="<?php echo $product_id; ?>_iframe" src="" allowfullscreen
@@ -488,6 +500,7 @@ $result = $conn->query($sql);
   <!-- Video Modal JavaScript -->
   <script>
     function openVideoModal(productId) {
+      console.log('Opening video modal for:', productId);
       var modal = document.getElementById(productId + '_modal');
       if (modal) {
         modal.style.display = 'block';
@@ -500,9 +513,13 @@ $result = $conn->query($sql);
         var iframe = modal.querySelector('iframe');
         var video = modal.querySelector('video');
         
+        console.log('Found iframe:', !!iframe, 'Found video:', !!video);
+        
         if (iframe && iframe.hasAttribute('data-src')) {
           // Load iframe source to trigger autoplay
-          iframe.src = iframe.getAttribute('data-src');
+          var src = iframe.getAttribute('data-src');
+          console.log('Loading iframe src:', src);
+          iframe.src = src;
           
           // Show autoplay indicator for iframe videos
           if (indicator) {
@@ -515,6 +532,26 @@ $result = $conn->query($sql);
         
         if (video) {
           // For direct video files, ensure autoplay
+          console.log('Video source:', video.querySelector('source') ? video.querySelector('source').src : 'No source found');
+          
+          // Add error handling
+          video.addEventListener('error', function(e) {
+            console.error('Video error:', e);
+            if (indicator) {
+              indicator.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Video failed to load';
+              indicator.style.background = 'rgba(220, 53, 69, 0.9)';
+              indicator.style.display = 'block';
+            }
+          });
+          
+          video.addEventListener('loadstart', function() {
+            console.log('Video started loading');
+          });
+          
+          video.addEventListener('canplay', function() {
+            console.log('Video can start playing');
+          });
+          
           video.currentTime = 0;
           video.muted = true; // Ensure muted for autoplay policy compliance
           
@@ -525,7 +562,7 @@ $result = $conn->query($sql);
           if (playPromise !== undefined) {
             playPromise.then(function() {
               // Video started successfully - show indicator
-              console.log('Video autoplay started');
+              console.log('Video autoplay started successfully');
               if (indicator) {
                 indicator.style.display = 'block';
                 setTimeout(function() {
@@ -534,7 +571,7 @@ $result = $conn->query($sql);
               }
             }).catch(function(error) {
               // Auto-play was prevented
-              console.log('Autoplay prevented, will unmute after user clicks:', error);
+              console.log('Autoplay prevented:', error);
               
               // Add click listener to unmute when user interacts
               video.addEventListener('click', function() {
@@ -550,6 +587,8 @@ $result = $conn->query($sql);
             });
           }
         }
+      } else {
+        console.log('Modal not found for product:', productId);
       }
     }
 

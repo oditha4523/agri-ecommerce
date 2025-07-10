@@ -11,6 +11,12 @@ $sellers_query = "SELECT seller_id, seller_name FROM sellers";
 $sellers_result = $conn->query($sellers_query);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Debug: Log file upload info
+    error_log("File upload debug - POST received");
+    if (isset($_FILES['video_file'])) {
+        error_log("File info: " . print_r($_FILES['video_file'], true));
+    }
+    
     $name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $category = mysqli_real_escape_string($conn, $_POST['category']);
     $seller_id = mysqli_real_escape_string($conn, $_POST['seller_id']);
@@ -21,6 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Handle video file upload
         $video_url = null;
+        
+        // Check if a file was uploaded
         if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
             $upload_dir = '../assets/videos/';
             
@@ -39,15 +47,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (move_uploaded_file($_FILES['video_file']['tmp_name'], $target_path)) {
                     $video_url = 'assets/videos/' . $file_name; // Relative path for database
                 } else {
-                    $error_message = "Error uploading video file.";
+                    $error_message = "Error uploading video file. Please try again.";
                 }
             } else {
                 $error_message = "Invalid video format. Please upload MP4, WebM, OGG, AVI, or MOV files.";
             }
-        } else if ($_FILES['video_file']['error'] !== UPLOAD_ERR_NO_FILE) {
-            $error_message = "Video file is required.";
         } else {
-            $error_message = "Please select a video file to upload.";
+            // Check for upload errors
+            if (isset($_FILES['video_file'])) {
+                switch ($_FILES['video_file']['error']) {
+                    case UPLOAD_ERR_NO_FILE:
+                        $error_message = "Please select a video file to upload.";
+                        break;
+                    case UPLOAD_ERR_INI_SIZE:
+                    case UPLOAD_ERR_FORM_SIZE:
+                        $error_message = "Video file is too large. Please choose a smaller file.";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $error_message = "Video file upload was interrupted. Please try again.";
+                        break;
+                    default:
+                        $error_message = "Error uploading video file. Please try again.";
+                        break;
+                }
+            } else {
+                $error_message = "Please select a video file to upload.";
+            }
         }
         
         // Insert product if no errors
@@ -230,6 +255,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="alert alert-danger" role="alert">
                             <i class="bi bi-exclamation-triangle"></i> <?php echo $error_message; ?>
                         </div>
+                        
+                        <!-- Debug info (remove in production) -->
+                        <?php if (isset($_FILES['video_file'])): ?>
+                            <div class="alert alert-info" role="alert">
+                                <strong>Debug Info:</strong><br>
+                                File Error Code: <?php echo $_FILES['video_file']['error']; ?><br>
+                                File Name: <?php echo htmlspecialchars($_FILES['video_file']['name'] ?? 'None'); ?><br>
+                                File Size: <?php echo $_FILES['video_file']['size'] ?? 0; ?> bytes<br>
+                                File Type: <?php echo htmlspecialchars($_FILES['video_file']['type'] ?? 'Unknown'); ?>
+                            </div>
+                        <?php endif; ?>
                     <?php endif; ?>
                     
                     <div class="category-info">
