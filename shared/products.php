@@ -205,25 +205,21 @@ include '../db/DBcon.php';
     <div class="imgWrap imgWrap1" style="background-image: url(../assets/img/products/cinnomon.jpg);" onclick="window.location.href='viewproducts.php?category=cinnamon'">
       <div class="caption">
         <h3>CINNAMON</h3>
-        <span>VIEW PRODUCTS</span>
       </div>
     </div>
     <div class="imgWrap imgWrap2" style="background-image: url(../assets/img/products/kithul.jpg);" onclick="window.location.href='viewproducts.php?category=kithul'">
       <div class="caption">
         <h3>KITHUL</h3>
-        <span>VIEW PRODUCTS</span>
       </div>
     </div>
     <div class="imgWrap imgWrap3" style="background-image: url(../assets/img/products/tea.jpg);" onclick="window.location.href='viewproducts.php?category=tea'">
       <div class="caption">
         <h3>HANDMADE TEA</h3>
-        <span>VIEW PRODUCTS</span>
       </div>
     </div>
     <div class="imgWrap imgWrap4" style="background-image: url(../assets/img/products/dry_fish.jpg);" onclick="window.location.href='viewproducts.php?category=dry_fish'">
       <div class="caption">
         <h3>DRY FISH</h3>
-        <span>VIEW PRODUCTS</span>
       </div>
     </div>
     

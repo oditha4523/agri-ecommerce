@@ -288,9 +288,13 @@ $result = $conn->query($sql);
                           $video_id = $matches[1];
                           $video_type = 'vimeo';
                       }
-                      // Check if it's a direct video file
-                      elseif (preg_match('/\.(mp4|webm|ogg)$/i', $video_url)) {
+                      // Check if it's a local video file or direct video file
+                      elseif (preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $video_url)) {
                           $video_type = 'direct';
+                      }
+                      // Default to iframe for other URLs
+                      else {
+                          $video_type = 'iframe';
                       }
                   }
                   
@@ -343,7 +347,7 @@ $result = $conn->query($sql);
                           data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1&muted=1"></iframe>
                 <?php elseif ($video_type === 'direct'): ?>
                   <video id="<?php echo $product_id; ?>_video" controls muted preload="metadata">
-                    <source src="<?php echo htmlspecialchars($video_url); ?>" type="video/mp4">
+                    <source src="<?php echo htmlspecialchars($video_url); ?>" type="video/<?php echo pathinfo($video_url, PATHINFO_EXTENSION); ?>">
                     Your browser does not support the video tag.
                   </video>
                 <?php else: ?>

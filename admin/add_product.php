@@ -14,36 +14,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $category = mysqli_real_escape_string($conn, $_POST['category']);
     $seller_id = mysqli_real_escape_string($conn, $_POST['seller_id']);
-    $video_url = mysqli_real_escape_string($conn, $_POST['video_url']);
     
-    // Handle image upload (keeping existing logic for compatibility)
-    $image_path = null;
-    if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = '../assets/img/products/';
-        
-        // Create directory if it doesn't exist
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-        
-        $file_extension = pathinfo($_FILES['product_image']['name'], PATHINFO_EXTENSION);
-        $file_name = uniqid() . '.' . $file_extension;
-        $target_path = $upload_dir . $file_name;
-        
-        if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_path)) {
-            $image_path = $file_name; // Store just the filename
-        }
-    }
-
-    // Insert product into products table with the selected category
-    $sql = "INSERT INTO products (seller_id, name, category, video_url) 
-            VALUES ('$seller_id', '$name', '$category', '$video_url')";
-
-    if ($conn->query($sql) === TRUE) {
-        header("Location: view_products.php?success=product_added");
-        exit;
+    // Validate required fields
+    if (empty($name) || empty($category) || empty($seller_id)) {
+        $error_message = "Product name, category, and seller are required.";
     } else {
-        echo "Error: " . $conn->error;
+        // Handle video file upload
+        $video_url = null;
+        if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
+            $upload_dir = '../assets/videos/';
+            
+            // Create directory if it doesn't exist
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
+            }
+            
+            $file_extension = strtolower(pathinfo($_FILES['video_file']['name'], PATHINFO_EXTENSION));
+            $allowed_extensions = ['mp4', 'webm', 'ogg', 'avi', 'mov'];
+            
+            if (in_array($file_extension, $allowed_extensions)) {
+                $file_name = uniqid() . '.' . $file_extension;
+                $target_path = $upload_dir . $file_name;
+                
+                if (move_uploaded_file($_FILES['video_file']['tmp_name'], $target_path)) {
+                    $video_url = 'assets/videos/' . $file_name; // Relative path for database
+                } else {
+                    $error_message = "Error uploading video file.";
+                }
+            } else {
+                $error_message = "Invalid video format. Please upload MP4, WebM, OGG, AVI, or MOV files.";
+            }
+        } else if ($_FILES['video_file']['error'] !== UPLOAD_ERR_NO_FILE) {
+            $error_message = "Video file is required.";
+        } else {
+            $error_message = "Please select a video file to upload.";
+        }
+        
+        // Insert product if no errors
+        if (!isset($error_message)) {
+            $sql = "INSERT INTO products (seller_id, name, category, video_url) 
+                    VALUES ('$seller_id', '$name', '$category', '$video_url')";
+
+            if ($conn->query($sql) === TRUE) {
+                header("Location: view_products.php?success=product_added");
+                exit;
+            } else {
+                $error_message = "Error: " . $conn->error;
+            }
+        }
     }
 }
 ?>
@@ -175,6 +193,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #6c757d;
             margin-top: 5px;
         }
+        
+        .form-control[type="file"] {
+            padding: 8px 12px;
+        }
+        
+        .form-control[type="file"]::-webkit-file-upload-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .form-control[type="file"]::-webkit-file-upload-button:hover {
+            background: #45a049;
+        }
     </style>
 </head>
 <body class="index-page">
@@ -186,10 +222,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="form-container" data-aos="fade-up">
                 <div class="form-header">
                     <h2><i class="bi bi-plus-circle"></i> Add New Product</h2>
-                    <p class="mb-0">Add products to your agricultural marketplace</p>
+                    <p class="mb-0">Add products with video files to your agricultural marketplace</p>
                 </div>
                 
                 <div class="form-body">
+                    <?php if (isset($error_message)): ?>
+                        <div class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle"></i> <?php echo $error_message; ?>
+                        </div>
+                    <?php endif; ?>
+                    
                     <div class="category-info">
                         <h5><i class="bi bi-info-circle"></i> Category Information</h5>
                         <ul class="mb-0">
@@ -238,19 +280,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     
                     <div class="form-group">
-                        <label for="video_url" class="form-label">
-                            <i class="bi bi-play-circle"></i> Video URL (Optional)
+                        <label for="video_file" class="form-label">
+                            <i class="bi bi-camera-video"></i> Video File
                         </label>
-                        <input type="url" name="video_url" id="video_url" class="form-control" placeholder="https://youtube.com/watch?v=..." />
-                        <div class="form-help">Add a YouTube or other video URL to showcase your product</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="product_image" class="form-label">
-                            <i class="bi bi-image"></i> Product Image (Optional)
-                        </label>
-                        <input type="file" name="product_image" id="product_image" class="form-control" accept="image/*" />
-                        <div class="form-help">Image upload is optional. Default images will be used for display.</div>
+                        <input type="file" name="video_file" id="video_file" class="form-control" 
+                               accept=".mp4,.webm,.ogg,.avi,.mov" required />
+                        <div class="form-help">
+                            Upload a video file. Supported formats: MP4, WebM, OGG, AVI, MOV (Max size: depends on server settings)
+                        </div>
                     </div>
                     
                     <div class="text-center mt-4">

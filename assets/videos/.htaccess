@@ -1,0 +1,17 @@
+# Video file MIME types
+AddType video/mp4 .mp4
+AddType video/webm .webm
+AddType video/ogg .ogg
+AddType video/x-msvideo .avi
+AddType video/quicktime .mov
+
+# Security headers for video files
+<FilesMatch "\.(mp4|webm|ogg|avi|mov)$">
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options SAMEORIGIN
+</FilesMatch>
+
+# Allow cross-origin requests for video files
+<FilesMatch "\.(mp4|webm|ogg|avi|mov)$">
+    Header always set Access-Control-Allow-Origin "*"
+</FilesMatch>
