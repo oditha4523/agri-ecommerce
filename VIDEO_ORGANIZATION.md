@@ -40,10 +40,19 @@ The system supports the following video formats:
 
 The system automatically detects and handles different types of video URLs:
 
-1. **YouTube URLs**: Embeds using YouTube player
-2. **Vimeo URLs**: Embeds using Vimeo player
-3. **Local Videos**: Plays using HTML5 video player
+1. **YouTube URLs**: Embeds using YouTube player (click to play)
+2. **Vimeo URLs**: Embeds using Vimeo player (click to play)
+3. **Local Videos**: Plays using HTML5 video player (click to play)
 4. **Other URLs**: Falls back to iframe embedding
+
+### Video Playback Behavior
+
+- **Click to Open**: Video overlay appears only on product images, not the entire page
+- **Modal Playback**: Videos start playing automatically when modal opens after user clicks play button
+- **Contained Overlay**: Play button overlay is constrained to the product image area
+- **Muted by Default**: Local videos are muted by default to comply with browser policies
+- **Responsive**: Video players adapt to different screen sizes
+- **User Initiated**: Videos only open when user specifically clicks the play button on product images
 
 ## How to Store Videos
 

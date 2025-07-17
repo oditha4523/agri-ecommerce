@@ -58,6 +58,11 @@ $result = $conn->query($sql);
       box-shadow: 0 2px 4px rgba(70, 130, 180, 0.3);
     }
     
+    .member-img {
+      position: relative;
+      overflow: hidden;
+    }
+    
     .member-img img {
       height: 250px;
       object-fit: cover;
@@ -288,16 +293,16 @@ $result = $conn->query($sql);
                 <span class="video-close" onclick="closeVideoModal('<?php echo $product_id; ?>')">&times;</span>
                 <?php if ($video_type === 'youtube'): ?>
                   <iframe id="<?php echo $product_id; ?>_iframe" src="" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                           allowfullscreen
-                          data-src="https://www.youtube.com/embed/<?php echo $video_id; ?>?autoplay=1&mute=1"></iframe>
+                          data-src="https://www.youtube.com/embed/<?php echo $video_id; ?>"></iframe>
                 <?php elseif ($video_type === 'vimeo'): ?>
                   <iframe id="<?php echo $product_id; ?>_iframe" src="" 
-                          allow="autoplay; fullscreen; picture-in-picture" 
+                          allow="fullscreen; picture-in-picture" 
                           allowfullscreen
-                          data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>?autoplay=1&muted=1"></iframe>
+                          data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>"></iframe>
                 <?php elseif ($video_type === 'local'): ?>
-                  <video id="<?php echo $product_id; ?>_video" controls muted autoplay playsinline preload="metadata">
+                  <video id="<?php echo $product_id; ?>_video" controls muted playsinline preload="metadata">
                     <source src="<?php echo htmlspecialchars($video_url); ?>" 
                             type="video/<?php echo pathinfo($video_url, PATHINFO_EXTENSION); ?>">
                     <p>Your browser does not support the video tag. Video path: <?php echo htmlspecialchars($video_url); ?></p>
