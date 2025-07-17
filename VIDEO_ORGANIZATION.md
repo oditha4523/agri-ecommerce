@@ -27,6 +27,8 @@ assets/
 ### For Underutilized Products:
 - **Underutilized fruit videos**: `/assets/videos/products/underutilized/`
 
+All underutilized fruit videos are stored directly in the underutilized folder without subcategories.
+
 ## Supported Video Formats
 
 The system supports the following video formats:

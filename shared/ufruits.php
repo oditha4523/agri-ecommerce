@@ -416,6 +416,50 @@ $result = $conn->query($sql);
   <!-- Main JS File -->
   <script src="../assets/js/main.js"></script>
 
+  <!-- Video Modal JavaScript -->
+  <script>
+    function openVideoModal(productId) {
+      const modal = document.getElementById(productId + '_modal');
+      modal.style.display = 'block';
+      
+      const iframe = document.getElementById(productId + '_iframe');
+      const video = document.getElementById(productId + '_video');
+      
+      if (iframe && iframe.dataset.src) {
+        iframe.src = iframe.dataset.src;
+      }
+      
+      if (video) {
+        video.play();
+      }
+    }
+
+    function closeVideoModal(productId) {
+      const modal = document.getElementById(productId + '_modal');
+      modal.style.display = 'none';
+      
+      const iframe = document.getElementById(productId + '_iframe');
+      const video = document.getElementById(productId + '_video');
+      
+      if (iframe) {
+        iframe.src = '';
+      }
+      
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target.classList.contains('video-modal')) {
+        const productId = event.target.id.replace('_modal', '');
+        closeVideoModal(productId);
+      }
+    }
+  </script>
+
 </body>
 
 </html>
