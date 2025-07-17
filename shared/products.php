@@ -202,22 +202,22 @@ include '../db/DBcon.php';
 
     <div class="container-fluid">
   <div class="row gallery" id="gallery">
-    <div class="imgWrap imgWrap1" style="background-image: url(../assets/img/products/cinnomon.jpg);" onclick="window.location.href='viewproducts.php?category=cinnamon'">
+    <div class="imgWrap imgWrap1" style="background-image: url(../assets/img/products/cinnomon.jpg);" onclick="window.location.href='cinnamon.php'">
       <div class="caption">
         <h3>CINNAMON</h3>
       </div>
     </div>
-    <div class="imgWrap imgWrap2" style="background-image: url(../assets/img/products/kithul.jpg);" onclick="window.location.href='viewproducts.php?category=kithul'">
+    <div class="imgWrap imgWrap2" style="background-image: url(../assets/img/products/kithul.jpg);" onclick="window.location.href='kithul.php'">
       <div class="caption">
         <h3>KITHUL</h3>
       </div>
     </div>
-    <div class="imgWrap imgWrap3" style="background-image: url(../assets/img/products/tea.jpg);" onclick="window.location.href='viewproducts.php?category=tea'">
+    <div class="imgWrap imgWrap3" style="background-image: url(../assets/img/products/tea.jpg);" onclick="window.location.href='tea.php'">
       <div class="caption">
         <h3>HANDMADE TEA</h3>
       </div>
     </div>
-    <div class="imgWrap imgWrap4" style="background-image: url(../assets/img/products/dry_fish.jpg);" onclick="window.location.href='viewproducts.php?category=dry_fish'">
+    <div class="imgWrap imgWrap4" style="background-image: url(../assets/img/products/dry_fish.jpg);" onclick="window.location.href='dry_fish.php'">
       <div class="caption">
         <h3>DRY FISH</h3>
       </div>

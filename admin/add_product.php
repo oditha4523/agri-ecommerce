@@ -30,7 +30,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Check if a file was uploaded
         if (isset($_FILES['video_file']) && $_FILES['video_file']['error'] === UPLOAD_ERR_OK) {
-            $upload_dir = '../assets/videos/';
+            // Determine the upload directory based on category
+            $category_path = strtolower($category); // 'Utilized' or 'UnderUtilized'
+            
+            if ($category_path === 'utilized') {
+                // For utilized products, determine subcategory based on product name
+                $subcategory = 'general'; // default
+                $product_name_lower = strtolower($name);
+                
+                if (preg_match('/cinnamon|spice|bark/', $product_name_lower)) {
+                    $subcategory = 'cinnamon';
+                } elseif (preg_match('/kithul|palm|treacle|jaggery/', $product_name_lower)) {
+                    $subcategory = 'kithul';
+                } elseif (preg_match('/tea|ceylon|black tea|green tea/', $product_name_lower)) {
+                    $subcategory = 'tea';
+                } elseif (preg_match('/fish|dried|seafood|maldive/', $product_name_lower)) {
+                    $subcategory = 'dry_fish';
+                }
+                
+                $upload_dir = "../assets/videos/products/utilized/{$subcategory}/";
+            } else {
+                // For underutilized products
+                $upload_dir = '../assets/videos/products/underutilized/';
+            }
             
             // Create directory if it doesn't exist
             if (!is_dir($upload_dir)) {
@@ -45,7 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $target_path = $upload_dir . $file_name;
                 
                 if (move_uploaded_file($_FILES['video_file']['tmp_name'], $target_path)) {
-                    $video_url = 'assets/videos/' . $file_name; // Relative path for database
+                    // Store relative path for database (without ../)
+                    $video_url = str_replace('../', '', $target_path);
                 } else {
                     $error_message = "Error uploading video file. Please try again.";
                 }
