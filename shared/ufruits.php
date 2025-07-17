@@ -52,6 +52,96 @@ $result = $conn->query($sql);
       margin-left: 10px;
     }
     
+    .member-img {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .member-img img {
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      width: 100%;
+    }
+    
+    .member-img video {
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px;
+      width: 100%;
+    }
+    
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    
+    .video-overlay:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+    
+    .video-overlay .play-btn {
+      font-size: 48px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .video-modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+    
+    .video-modal-content {
+      background-color: #000;
+      margin: 5% auto;
+      padding: 0;
+      width: 90%;
+      max-width: 800px;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .video-modal video,
+    .video-modal iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 10px;
+    }
+    
+    .video-close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      z-index: 1001;
+      cursor: pointer;
+    }
+    
+    .video-close:hover {
+      color: white;
+    }
+    
     .social .bi-play-circle-fill {
       font-size: 24px;
       color: #dc3545;
@@ -77,18 +167,12 @@ $result = $conn->query($sql);
       color: #333;
       margin-bottom: 20px;
     }
-    
-    .member-img img {
-      height: 250px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    
+
     .member-info h4 {
       color: #2c5530;
       margin-bottom: 10px;
     }
-    
+
     .member-info span {
       color: #666;
       font-style: italic;
@@ -154,18 +238,57 @@ $result = $conn->query($sql);
                   $display_image = "../assets/img/products/" . $default_images[$image_index % count($default_images)];
                   $image_index++;
                   
-                  // If there's a video URL, we could show a video thumbnail or play button
                   $video_url = $row['video_url'];
+                  $video_id = '';
+                  $video_type = '';
+                  
+                  if (!empty($video_url)) {
+                      // Check if it's a YouTube video
+                      if (preg_match('/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/', $video_url, $matches)) {
+                          $video_id = $matches[1];
+                          $video_type = 'youtube';
+                      }
+                      // Check if it's a Vimeo video
+                      elseif (preg_match('/vimeo\.com\/(\d+)/', $video_url, $matches)) {
+                          $video_id = $matches[1];
+                          $video_type = 'vimeo';
+                      }
+                      // Check for local video files (relative paths or file extensions)
+                      elseif (preg_match('/\.(mp4|webm|ogg|avi|mov)$/i', $video_url) || 
+                              strpos($video_url, 'assets/') === 0 || 
+                              strpos($video_url, '../assets/') === 0 ||
+                              strpos($video_url, '/assets/') !== false) {
+                          $video_type = 'local';
+                          // Ensure proper path for local videos
+                          if (strpos($video_url, '../') !== 0 && strpos($video_url, 'http') !== 0) {
+                              // If it's just a filename or relative path, construct full path
+                              if (strpos($video_url, 'assets/') === 0) {
+                                  $video_url = '../' . $video_url;
+                              } elseif (!preg_match('/^\.\.\//', $video_url)) {
+                                  // Default to underutilized folder for local files
+                                  $video_url = '../assets/videos/products/underutilized/' . basename($video_url);
+                              }
+                          }
+                      }
+                      // Default to iframe for other URLs
+                      else {
+                          $video_type = 'iframe';
+                      }
+                  }
+                  
+                  $product_id = 'product_' . $row['product_id'];
           ?>
           <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
             <div class="member-img">
-              <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
+              <?php if (!empty($video_url)): ?>
+                <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                <div class="video-overlay" onclick="openVideoModal('<?php echo $product_id; ?>')">
+                  <i class="bi bi-play-circle-fill play-btn"></i>
+                </div>
+              <?php else: ?>
+                <img src="<?php echo htmlspecialchars($display_image); ?>" class="img-fluid" alt="<?php echo htmlspecialchars($row['name']); ?>">
+              <?php endif; ?>
               <div class="social">
-                <?php if(!empty($video_url)): ?>
-                  <a href="<?php echo htmlspecialchars($video_url); ?>" target="_blank" title="Watch Video">
-                    <i class="bi bi-play-circle-fill"></i>
-                  </a>
-                <?php endif; ?>
                 <span class="product-category">Underutilized Fruit</span>
               </div>
             </div>
@@ -174,12 +297,41 @@ $result = $conn->query($sql);
               <span>Seller: <?php echo htmlspecialchars($row['seller_name']); ?></span>
               <?php if(!empty($video_url)): ?>
                 <div class="product-actions mt-3">
-                  <a href="<?php echo htmlspecialchars($video_url); ?>" target="_blank" class="btn btn-primary btn-sm">
+                  <button onclick="openVideoModal('<?php echo $product_id; ?>')" class="btn btn-primary btn-sm">
                     <i class="bi bi-play-circle"></i> Watch Video
-                  </a>
+                  </button>
                 </div>
               <?php endif; ?>
             </div>
+            
+            <?php if (!empty($video_url)): ?>
+            <!-- Video Modal -->
+            <div id="<?php echo $product_id; ?>_modal" class="video-modal">
+              <div class="video-modal-content">
+                <span class="video-close" onclick="closeVideoModal('<?php echo $product_id; ?>')">&times;</span>
+                <?php if ($video_type === 'youtube'): ?>
+                  <iframe id="<?php echo $product_id; ?>_iframe" src="" 
+                          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                          allowfullscreen
+                          data-src="https://www.youtube.com/embed/<?php echo $video_id; ?>"></iframe>
+                <?php elseif ($video_type === 'vimeo'): ?>
+                  <iframe id="<?php echo $product_id; ?>_iframe" src="" 
+                          allow="fullscreen; picture-in-picture" 
+                          allowfullscreen
+                          data-src="https://player.vimeo.com/video/<?php echo $video_id; ?>"></iframe>
+                <?php elseif ($video_type === 'local'): ?>
+                  <video id="<?php echo $product_id; ?>_video" controls muted playsinline preload="metadata">
+                    <source src="<?php echo htmlspecialchars($video_url); ?>" 
+                            type="video/<?php echo pathinfo($video_url, PATHINFO_EXTENSION); ?>">
+                    <p>Your browser does not support the video tag. Video path: <?php echo htmlspecialchars($video_url); ?></p>
+                  </video>
+                <?php else: ?>
+                  <iframe id="<?php echo $product_id; ?>_iframe" src="" allowfullscreen
+                          data-src="<?php echo htmlspecialchars($video_url); ?>"></iframe>
+                <?php endif; ?>
+              </div>
+            </div>
+            <?php endif; ?>
           </div><!-- End Product -->
           <?php
               }
