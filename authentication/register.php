@@ -297,9 +297,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-group">
                     <i class="bi bi-person-badge form-icon"></i>
                     <select name="user_type" id="user_type" class="form-control" style="padding-left: 50px;" required>
-                        <option value="">Select User Type</option>
                         <option value="admin">Administrator</option>
-                        <option value="user">Regular User</option>
                     </select>
                 </div>
                 
